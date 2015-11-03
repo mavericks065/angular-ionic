@@ -1,0 +1,12 @@
+{
+  "name": "iPasswordManager",
+  "app_id": "ea84d7a8",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

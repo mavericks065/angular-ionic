@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>IPasswordManager</title>
+
+
+    <!-- compiled css output -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/forge.min.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/angularfire.min.js"></script>
+
+    <script src="app/core/core.module.js"></script>
+    <script src="app/core/core.route.js"></script>
+    <script src="app/core/core.constants.js"></script>
+    <script src="app/authentication/authentication-login.module.js"></script>
+    <script src="app/authentication/authentication-login.controller.js"></script>
+    <script src="app/categories/categories.module.js"></script>
+    <script src="app/categories/categories.controller.js"></script>
+    <script src="app/passwords/passwords.module.js"></script>
+    <script src="app/passwords/passwords.controller.js"></script>
+    <script src="app/vault/vault.module.js"></script>
+    <script src="app/vault/vault.controller.js"></script>
+
+    <script src="app/cipher.service.js"></script>
+
+    <script src="app/app.js"></script>
+  </head>
+  <body ng-app="ipmApp">
+
+    <!-- <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">iPasswordManager</h1>
+      </ion-header-bar>
+      <ion-content>
+      </ion-content>
+    </ion-pane> -->
+    <ion-pane>
+      <ion-nav-bar class="bar-stable">
+      </ion-nav-bar>
+
+      <ion-nav-view>
+      </ion-nav-view>
+    </ion-pane>
+  </body>
+</html>

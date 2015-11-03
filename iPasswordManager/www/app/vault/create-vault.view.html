@@ -1,0 +1,24 @@
+<ion-view title="Create Master Password" ng-init="init()">
+  <ion-content>
+    <div class="padding-left padding-top padding-right padding-bottom">
+      <h1>Welcome</h1>
+      <p>
+        Please enter your master password, it will be requested everytime you will want to access the app.
+      </p>
+      <p>
+        We highly recommend this password to be at least 10 characters containing letters, numbers and special characters.
+      </p>
+    </div>
+    <div class="padding-left padding-right">
+      <label class="item item-input">
+        <input ng-model="vaultCtrl.masterPassword"
+               type="password"
+               placeholder="Master Password" />
+      </label>
+      <button class="button button-block button-positive"
+              ng-click="vaultCtrl.create(vaultCtrl.masterPassword)" >
+        Create
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
