@@ -10,8 +10,9 @@
     .controller('AuthenticationController', AuthenticationController);
 
   function AuthenticationController($state, $ionicHistory, $firebaseAuth,
-    CoreConstants) {
+    $injector) {
 
+    var CoreConstants = $injector.get('CoreConstants');
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
       disableBack: true
@@ -30,10 +31,12 @@
       fbAuth.$authWithPassword({
         email: user.username,
         password: user.password
-      }).then(function(authData) {
-        $state.go('locked');
-      }).catch(function(error) {
-        console.error('ERROR: ' + error);
+      }).then(function(error, authData) {
+        if (error) {
+          console.error('Login failed: ' + error);
+        } else if (authData) {
+          $state.go('locked');
+        }
       });
     }
 
@@ -41,15 +44,30 @@
       fbAuth.$createUser({
         email: user.username,
         password: user.password})
-      .then(function(userData) {
-        return fbAuth.$authWithPassword({
-          email: user.username,
-          password: user.password
-        });
-      }).then(function(authData) {
-        $state.go('createvault');
-      }).catch(function(error) {
-        console.error('ERROR: ' + error);
+      .then(function(error, userData) {
+        if (error) {
+          switch (error.code) {
+            case 'EMAIL_TAKEN':
+              console.log('The new user account cannot be created because the email is already in use.');
+              break;
+            case 'INVALID_EMAIL':
+              console.log('The specified email is not a valid email.');
+              break;
+            default:
+              console.log('Error creating user:', error);
+          }
+        } else if (userData) {
+          return fbAuth.$authWithPassword({
+            email: user.username,
+            password: user.password
+          });
+        }
+      }).then(function(error, authData) {
+        if (error) {
+          console.error('Login failed: ' + error);
+        } else if (authData) {
+          $state.go('createvault');
+        }
       });
     }
   }

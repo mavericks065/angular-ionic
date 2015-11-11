@@ -11,8 +11,9 @@
     .controller('VaultController', VaultController);
 
   function VaultController($scope, $state, $ionicHistory, $firebaseObject,
-      $cipherFactory, CoreConstants) {
+    $cipherFactory, $injector) {
 
+    var CoreConstants = $injector.get('CoreConstants');
     var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
     var fbAuth = fb.getAuth();
 
@@ -53,7 +54,8 @@
       vm.syncObject.$loaded().then(function() {
         vm.userReference.child('masterPassword').set($cipherFactory.encrypt('Authenticated',
                                                       masterPassword),
-                                                      function(error) {
+                                                      function() {
+          // there is an error
           $state.go('locked');
         });
       });

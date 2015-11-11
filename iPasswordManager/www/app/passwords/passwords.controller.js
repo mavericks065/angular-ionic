@@ -10,19 +10,20 @@
     .controller('PasswordController', PasswordController);
 
   function PasswordController($scope, $stateParams, $firebaseObject, $state,
-      $cipherFactory, $ionicHistory, CoreConstants) {
+      $cipherFactory, $ionicHistory, $injector) {
 
+    var CoreConstants = $injector.get('CoreConstants');
     var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
 
     $scope.masterPassword = $stateParams.masterPassword;
     $scope.categoryId = $stateParams.categoryId;
-    $scope.passwords = [];
+    $scope.digitalFootprints = [];
 
     var fbAuth = fb.getAuth();
     if (fbAuth) {
       var categoryReference = fb.child('users/' + fbAuth.uid + '/categories/' + $stateParams.categoryId);
       var passwordsReference = fb.child('users/' + fbAuth.uid + '/categories/' +
-                                $stateParams.categoryId + '/passwords');
+                                $stateParams.categoryId + '/digitalFootprints');
       var syncObject = $firebaseObject(categoryReference);
       syncObject.$bindTo($scope, 'data');
     } else {
@@ -31,12 +32,12 @@
 
     $scope.list = function() {
       syncObject.$loaded().then(function() {
-        var encryptedPasswords = $scope.data.passwords;
+        var encryptedPasswords = $scope.data.digitalFootprints;
         for (var key in encryptedPasswords) {
           if (encryptedPasswords.hasOwnProperty(key)) {
-            $scope.passwords.push({
+            $scope.digitalFootprints.push({
               id: key,
-              password: JSON.parse($cipherFactory.decrypt(encryptedPasswords[key].cipherText,
+              digitalFootprint: JSON.parse($cipherFactory.decrypt(encryptedPasswords[key].cipherText,
                 $stateParams.masterPassword, encryptedPasswords[key].salt, encryptedPasswords[key].iv))
             });
           }
@@ -46,24 +47,24 @@
 
     $scope.view = function() {
       syncObject.$loaded().then(function() {
-        var encryptedPassword = $scope.data.passwords[$stateParams.passwordId];
-        $scope.password = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
+        var encryptedPassword = $scope.data.digitalFootprints[$stateParams.passwordId];
+        $scope.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
           $stateParams.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
       });
     };
 
-    $scope.save = function(title, username, password, comment) {
-      var passwordObject = {
+    $scope.save = function(title, username, password, hint) {
+      var digitalFootprintObject = {
         title: title,
         username: username,
         password: password,
-        comment: comment
+        hint: hint
       };
       syncObject.$loaded().then(function() {
-        passwordsReference.child(JSON.stringify(passwordObject).toSHA1())
+        passwordsReference.child(JSON.stringify(digitalFootprintObject).toSHA1())
                                   .set($cipherFactory
-                                    .encrypt(JSON.stringify(passwordObject),
-                                            $stateParams.masterPassword), function(ref) {
+                                    .encrypt(JSON.stringify(digitalFootprintObject),
+                                            $stateParams.masterPassword), function() {
           $state.go('passwords', $stateParams);
         });
       });

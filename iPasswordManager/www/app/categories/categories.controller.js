@@ -10,8 +10,9 @@
     .controller('CategoryController', CategoryController);
 
   function CategoryController($scope, $state, $ionicPopup, $firebaseObject,
-      $stateParams, $cipherFactory, CoreConstants) {
+    $stateParams, $cipherFactory, $injector) {
 
+    var CoreConstants = $injector.get('CoreConstants');
     $scope.masterPassword = $stateParams.masterPassword;
     $scope.categories = [];
 
@@ -32,9 +33,10 @@
           if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
             $scope.categories.push({
               id: key,
-              category: $cipherFactory.decrypt($scope.fireBaseData.categories[key].category.cipherText,
-                $scope.masterPassword, $scope.fireBaseData.categories[key].category.salt,
-                $scope.fireBaseData.categories[key].category.iv)
+              category: $scope.fireBaseData.categories[key].category
+              // $cipherFactory.decrypt($scope.fireBaseData.categories[key].category.cipherText,
+              //   $scope.masterPassword, $scope.fireBaseData.categories[key].category.salt,
+              //   $scope.fireBaseData.categories[key].category.iv)
             });
           }
         }
@@ -52,10 +54,10 @@
             $scope.fireBaseData.categories = {};
           }
           if ($scope.fireBaseData.categories[result.toSHA1()] === undefined) {
-            $scope.fireBaseDatacategories[result.toSHA1()] = {
+            $scope.fireBaseData.categories[result.toSHA1()] = {
               category: result,
               // before : $cipherFactory.encrypt(result, $scope.masterPassword),
-              passwords: {}
+              digitalFootprints: {}
             };
             $scope.categories.push({
               id: result.toSHA1(),
