@@ -25,14 +25,14 @@
       var passwordsReference = fb.child('users/' + fbAuth.uid + '/categories/' +
                                 $stateParams.categoryId + '/digitalFootprints');
       var syncObject = $firebaseObject(categoryReference);
-      syncObject.$bindTo($scope, 'data');
+      syncObject.$bindTo($scope, 'firebaseData');
     } else {
       $state.go('authentication');
     }
 
     $scope.list = function() {
       syncObject.$loaded().then(function() {
-        var encryptedPasswords = $scope.data.digitalFootprints;
+        var encryptedPasswords = $scope.firebaseData.digitalFootprints;
         for (var key in encryptedPasswords) {
           if (encryptedPasswords.hasOwnProperty(key)) {
             $scope.digitalFootprints.push({
@@ -47,7 +47,7 @@
 
     $scope.view = function() {
       syncObject.$loaded().then(function() {
-        var encryptedPassword = $scope.data.digitalFootprints[$stateParams.passwordId];
+        var encryptedPassword = $scope.firebaseData.digitalFootprints[$stateParams.passwordId];
         $scope.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
           $stateParams.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
       });
