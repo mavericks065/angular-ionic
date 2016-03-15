@@ -31,44 +31,32 @@
       fbAuth.$authWithPassword({
         email: user.username,
         password: user.password
-      }).then(function(error, authData) {
-        if (error) {
-          console.error('Login failed: ' + error);
-        } else if (authData) {
+      }).then(function(authData) {
+        if (authData) {
           $state.go('locked');
         }
+      }).catch(function(error) {
+        console.error('Login Failed: ' + error);
       });
     }
 
     function register(user) {
       fbAuth.$createUser({
         email: user.username,
-        password: user.password})
-      .then(function(error, userData) {
-        if (error) {
-          switch (error.code) {
-            case 'EMAIL_TAKEN':
-              console.log('The new user account cannot be created because the email is already in use.');
-              break;
-            case 'INVALID_EMAIL':
-              console.log('The specified email is not a valid email.');
-              break;
-            default:
-              console.log('Error creating user:', error);
+        password: user.password}).then(function(userData) {
+          if (userData) {
+            return fbAuth.$authWithPassword({
+              email: user.username,
+              password: user.password
+            });
           }
-        } else if (userData) {
-          return fbAuth.$authWithPassword({
-            email: user.username,
-            password: user.password
-          });
-        }
-      }).then(function(error, authData) {
-        if (error) {
-          console.error('Login failed: ' + error);
-        } else if (authData) {
-          $state.go('createvault');
-        }
-      });
+        }).then(function(authData) {
+          if (authData) {
+            $state.go('createvault');
+          }
+        }).catch(function(error) {
+          console.error('Registration Failed: ' + error);
+        });
     }
   }
 })();

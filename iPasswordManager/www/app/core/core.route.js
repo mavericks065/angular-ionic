@@ -60,6 +60,11 @@
           templateUrl: 'app/passwords/password-new.view.html',
           controller: 'PasswordController as passwordCtrl'
         })
+        .state('editpassword', {
+          url: '/editpassword/:categoryId/:masterPassword/:passwordId',
+          templateUrl: 'app/passwords/password-new.view.html',
+          controller: 'PasswordController as passwordCtrl'
+        })
         .state('viewpassword', {
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
           templateUrl: 'app/passwords/password-display.view.html',
