@@ -5,26 +5,27 @@
     .module('ipmApp.passwords.controller', [
       'ionic',
       'firebase',
-      'ipmApp.core.constants'
+      'ipmApp.core.constants',
+      'ipmApp.core.firebase.service'
     ])
     .controller('PasswordController', PasswordController);
 
-  function PasswordController($scope, $stateParams, $firebaseObject, $state,
-      $cipherFactory, $ionicHistory, $injector) {
-
-    var CoreConstants = $injector.get('CoreConstants');
-    var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
+  function PasswordController($scope, $stateParams, $state, $cipherFactory,
+      $ionicHistory, FirebaseService) {
 
     $scope.masterPassword = $stateParams.masterPassword;
     $scope.categoryId = $stateParams.categoryId;
     $scope.digitalFootprints = [];
 
-    var fbAuth = fb.getAuth();
+    var fbAuth = FirebaseService.getFirebaseAuth();
+
     if (fbAuth) {
-      var categoryReference = fb.child('users/' + fbAuth.uid + '/categories/' + $stateParams.categoryId);
-      var passwordsReference = fb.child('users/' + fbAuth.uid + '/categories/' +
-                                $stateParams.categoryId + '/digitalFootprints');
-      var syncObject = $firebaseObject(categoryReference);
+      var categoryReference = FirebaseService.getCategoryReference(fbAuth.uid,
+        $stateParams.categoryId);
+      var passwordsReference = FirebaseService.getPasswordsReference(fbAuth.uid,
+        $stateParams.categoryId);
+      var syncObject = FirebaseService.synchronize(categoryReference);
+
       syncObject.$bindTo($scope, 'firebaseData');
     } else {
       $state.go('authentication');
@@ -61,10 +62,11 @@
         hint: hint
       };
       syncObject.$loaded().then(function() {
+        var encrytedPassword = $cipherFactory.encrypt(
+          JSON.stringify(digitalFootprintObject), $stateParams.masterPassword);
+
         passwordsReference.child(JSON.stringify(digitalFootprintObject).toSHA1())
-                                  .set($cipherFactory
-                                    .encrypt(JSON.stringify(digitalFootprintObject),
-                                            $stateParams.masterPassword), function() {
+          .set(encrytedPassword, function() {
           $state.go('passwords', $stateParams);
         });
       });

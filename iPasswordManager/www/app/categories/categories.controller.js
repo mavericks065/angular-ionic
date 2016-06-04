@@ -5,23 +5,21 @@
     .module('ipmApp.categories.controller', [
       'ionic',
       'firebase',
-      'ipmApp.core.constants'
+      'ipmApp.core.firebase.service'
     ])
     .controller('CategoryController', CategoryController);
 
-  function CategoryController($scope, $state, $ionicPopup, $firebaseObject,
-    $stateParams, $cipherFactory, $injector) {
+  function CategoryController($scope, $state, $ionicPopup, $stateParams,
+    $cipherFactory, FirebaseService) {
 
-    var CoreConstants = $injector.get('CoreConstants');
     $scope.masterPassword = $stateParams.masterPassword;
     $scope.categories = [];
 
-    var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
-    var fbAuth = fb.getAuth();
+    var fbAuth = FirebaseService.getFirebaseAuth();
 
     if (fbAuth) {
-      var categoriesReference = fb.child('users/' + fbAuth.uid);
-      var syncObject = $firebaseObject(categoriesReference);
+      var categoriesReference = FirebaseService.getUserReference(fbAuth.uid);
+      var syncObject = FirebaseService.synchronize(categoriesReference);
       syncObject.$bindTo($scope, 'fireBaseData');
     } else {
       $state.go('authentication');
