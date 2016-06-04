@@ -2,7 +2,7 @@
   "name": "iPasswordManager",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#v1.1.1"
+    "ionic": "driftyco/ionic-bower#master"
   },
   "dependencies": {
     "lodash": "~4.6.1",
