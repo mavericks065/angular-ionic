@@ -5,21 +5,18 @@
     .module('ipmApp.authenticationLogin.controller', [
       'ionic',
       'firebase',
-      'ipmApp.core.constants'
+      'ipmApp.core.constants',
+      'ipmApp.authenticationLogin.service'
     ])
     .controller('AuthenticationController', AuthenticationController);
 
   function AuthenticationController($state, $ionicHistory, $firebaseAuth,
-    $injector) {
+    AuthenticationLoginService) {
 
-    var CoreConstants = $injector.get('CoreConstants');
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
       disableBack: true
     });
-
-    var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
-    var fbAuth = $firebaseAuth(fb);
 
     var self = this;
     self.login = login;
@@ -28,10 +25,7 @@
     // internal functions
 
     function login(user) {
-      fbAuth.$authWithPassword({
-        email: user.username,
-        password: user.password
-      }).then(function(authData) {
+      AuthenticationLoginService.authenticate(user).then(function(authData) {
         if (authData) {
           $state.go('locked');
         }
@@ -41,22 +35,13 @@
     }
 
     function register(user) {
-      fbAuth.$createUser({
-        email: user.username,
-        password: user.password}).then(function(userData) {
-          if (userData) {
-            return fbAuth.$authWithPassword({
-              email: user.username,
-              password: user.password
-            });
-          }
-        }).then(function(authData) {
-          if (authData) {
-            $state.go('createvault');
-          }
-        }).catch(function(error) {
-          console.error('Registration Failed: ' + error);
-        });
+      AuthenticationLoginService.register(user).then(function(authData) {
+        if (authData) {
+          $state.go('createvault');
+        }
+      }).catch(function(error) {
+        console.error('Registration Failed: ' + error);
+      });
     }
   }
 })();

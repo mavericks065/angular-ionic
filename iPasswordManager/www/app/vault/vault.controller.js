@@ -6,16 +6,15 @@
       'ionic',
       'firebase',
       'ipmApp.cipher.service',
+      'ipmApp.core.firebase.service',
       'ipmApp.core.constants'
     ])
     .controller('VaultController', VaultController);
 
-  function VaultController($scope, $state, $ionicHistory, $firebaseObject,
-    $cipherFactory, $injector) {
+  function VaultController($scope, $state, $ionicHistory, $cipherFactory,
+    FirebaseService) {
 
-    var CoreConstants = $injector.get('CoreConstants');
-    var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
-    var fbAuth = fb.getAuth();
+    var fbAuth = FirebaseService.getFirebaseAuth();
 
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
@@ -26,10 +25,10 @@
     var vm = this;
 
     if (fbAuth) {
-      vm.userReference = fb.child('users/' + fbAuth.uid);
+      vm.userReference = FirebaseService.getUserReference(fbAuth.uid);
       // only way to  make the binding working :
       // http://stackoverflow.com/questions/29426985/angularfire-3-way-binding-without-scope
-      vm.syncObject = $firebaseObject(vm.userReference);
+      vm.syncObject = FirebaseService.synchronize(vm.userReference);
       vm.syncObject.$bindTo($scope, 'fireBaseData');
     } else {
       $state.go('authentication');
@@ -37,7 +36,7 @@
 
     vm.unlock = unlock;
     vm.create = create;
-    vm.reset = reset;
+    // vm.reset = reset;
 
     function unlock(masterPassword) {
       vm.syncObject.$loaded().then(function() {
@@ -52,23 +51,28 @@
 
     function create(masterPassword) {
       vm.syncObject.$loaded().then(function() {
-        vm.userReference.child('masterPassword').set($cipherFactory.encrypt('Authenticated',
-                                                      masterPassword),
-                                                      function() {
-          // there is an error
+        // vm.userReference.child('masterPassword').set($cipherFactory.encrypt('Authenticated',
+        //                                               masterPassword),
+        //                                               function() {
+        //   // there is an error
+        //   $state.go('locked');
+        // });
+        var result = FirebaseService.setValue(vm.userReference, 'masterPassword',
+          $cipherFactory.encrypt('Authenticated', masterPassword));
+        if (result) {
           $state.go('locked');
-        });
-      });
-    }
-
-    function reset() {
-      vm.userReference.remove(function(error) {
-        if (error) {
-          console.error('ERROR: ' + error);
-        } else {
-          $state.go('createvault');
         }
       });
     }
+
+    // function reset() {
+    //   vm.userReference.remove(function(error) {
+    //     if (error) {
+    //       console.error('ERROR: ' + error);
+    //     } else {
+    //       $state.go('createvault');
+    //     }
+    //   });
+    // }
   }
 })();
