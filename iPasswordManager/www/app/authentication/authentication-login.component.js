@@ -2,13 +2,21 @@
   'use strict';
 
   angular
-    .module('ipmApp.authenticationLogin.controller', [
+    .module('ipmApp.authenticationLogin.component', [
       'ionic',
       'firebase',
       'ipmApp.core.constants',
       'ipmApp.authenticationLogin.service'
     ])
-    .controller('AuthenticationController', AuthenticationController);
+    .component('authentication', authentication());
+
+  function authentication() {
+    var component = {
+      templateUrl: 'app/authentication/authentication-login.view.html',
+      controller: AuthenticationController
+    };
+    return component;
+  }
 
   function AuthenticationController($state, $ionicHistory, $firebaseAuth,
     AuthenticationLoginService) {

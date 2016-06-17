@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('ipmApp.authenticationLogin', [
-    'ipmApp.authenticationLogin.controller',
+    'ipmApp.authenticationLogin.component',
     'ipmApp.authenticationLogin.service'
   ]);
 })();

@@ -12,8 +12,11 @@
       $stateProvider
         .state('authentication', {
           url: '/authentication',
-          templateUrl: 'app/authentication/authentication-login.view.html',
-          controller: 'AuthenticationController as authenticationCtrl'
+          views: {
+            '': {
+              template: '<authentication></authentication>'
+            }
+          }
         })
         .state('tab', {
           url: '/tab',
