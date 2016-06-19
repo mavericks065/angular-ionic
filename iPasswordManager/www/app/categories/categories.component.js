@@ -2,14 +2,22 @@
   'use strict';
 
   angular
-    .module('ipmApp.categories.controller', [
+    .module('ipmApp.categories.component', [
       'ionic',
       'firebase',
       'ipmApp.core.firebase.service'
     ])
-    .controller('CategoryController', CategoryController);
+    .component('categories', categories());
 
-  function CategoryController($scope, $state, $ionicPopup, $stateParams,
+  function categories() {
+    var component = {
+      templateUrl: 'app/categories/categories.view.html',
+      controller: CategoriesController
+    };
+    return component;
+  }
+
+  function CategoriesController($scope, $state, $ionicPopup, $stateParams,
     $cipherFactory, FirebaseService) {
 
     $scope.masterPassword = $stateParams.masterPassword;

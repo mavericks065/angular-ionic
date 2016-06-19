@@ -38,8 +38,7 @@
           url: '/categories/:masterPassword',
           views: {
             'tab-categories': {
-              templateUrl: 'app/categories/categories.view.html',
-              controller: 'CategoryController as categoryCtrl'
+              template: '<categories></categories>'
             }
           }
         })
