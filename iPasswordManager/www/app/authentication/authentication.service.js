@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  angular.module('ipmApp.authenticationLogin.service', [
+  angular.module('ipmApp.authentication.service', [
     'firebase',
     'ipmApp.core.constants'
   ])
-  .service('AuthenticationLoginService', AuthenticationLoginService);
+  .service('AuthenticationService', AuthenticationService);
 
-  function AuthenticationLoginService($injector, $state, $firebaseAuth) {
+  function AuthenticationService($injector, $state, $firebaseAuth) {
 
     var CoreConstants = $injector.get('CoreConstants');
 

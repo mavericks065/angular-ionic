@@ -3,7 +3,7 @@
 
   angular
     .module('ipmApp.core.route', [
-      'ipmApp.authenticationLogin',
+      'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
       'ipmApp.passwords'

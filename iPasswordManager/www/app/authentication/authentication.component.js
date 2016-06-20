@@ -2,24 +2,24 @@
   'use strict';
 
   angular
-    .module('ipmApp.authenticationLogin.component', [
+    .module('ipmApp.authentication.component', [
       'ionic',
       'firebase',
       'ipmApp.core.constants',
-      'ipmApp.authenticationLogin.service'
+      'ipmApp.authentication.service'
     ])
     .component('authentication', authentication());
 
   function authentication() {
     var component = {
-      templateUrl: 'app/authentication/authentication-login.view.html',
+      templateUrl: 'app/authentication/authentication.view.html',
       controller: AuthenticationController
     };
     return component;
   }
 
   function AuthenticationController($state, $ionicHistory, $firebaseAuth,
-    AuthenticationLoginService) {
+    AuthenticationService) {
 
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
@@ -33,7 +33,7 @@
     // internal functions
 
     function login(user) {
-      AuthenticationLoginService.authenticate(user).then(function(authData) {
+      AuthenticationService.authenticate(user).then(function(authData) {
         if (authData) {
           $state.go('locked');
         }
@@ -43,7 +43,7 @@
     }
 
     function register(user) {
-      AuthenticationLoginService.register(user).then(function(authData) {
+      AuthenticationService.register(user).then(function(authData) {
         if (authData) {
           $state.go('createvault');
         }
