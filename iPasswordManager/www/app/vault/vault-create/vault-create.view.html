@@ -14,12 +14,12 @@
     </div>
     <div class="padding-left padding-right">
       <label class="item item-input">
-        <input ng-model="vaultCtrl.masterPassword"
+        <input ng-model="$ctrl.masterPassword"
                type="password"
                placeholder="Master Password" />
       </label>
       <button class="button button-block button-positive"
-              ng-click="vaultCtrl.create(vaultCtrl.masterPassword)" >
+              ng-click="$ctrl.create($ctrl.masterPassword)" >
         Create
       </button>
     </div>

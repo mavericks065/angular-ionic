@@ -25,14 +25,20 @@
         })
         .state('locked', {
           url: '/locked',
-          templateUrl: 'app/vault/locked.view.html',
-          controller: 'VaultController as vaultCtrl',
-          cache: false
+          cache: false,
+          views: {
+            '': {
+              template: '<vault-unlock></vault-unlock>'
+            }
+          }
         })
         .state('createvault', {
           url: '/createvault',
-          templateUrl: 'app/vault/create-vault.view.html',
-          controller: 'VaultController as vaultCtrl'
+          views: {
+            '': {
+              template: '<vault-create></vault-create>'
+            }
+          }
         })
         .state('tab.categories', {
           url: '/categories/:masterPassword',

@@ -2,16 +2,24 @@
   'use strict';
 
   angular
-    .module('ipmApp.vault.controller', [
+    .module('ipmApp.vault.unlock', [
       'ionic',
       'firebase',
       'ipmApp.cipher.service',
       'ipmApp.core.firebase.service',
       'ipmApp.core.constants'
     ])
-    .controller('VaultController', VaultController);
+    .component('vaultUnlock', vaultUnlock());
 
-  function VaultController($scope, $state, $ionicHistory, $cipherFactory,
+  function vaultUnlock() {
+    var component = {
+      templateUrl: 'app/vault/vault-unlock/vault-unlock.view.html',
+      controller: VaultUnlockController
+    };
+    return component;
+  }
+
+  function VaultUnlockController($scope, $state, $ionicHistory, $cipherFactory,
     FirebaseService) {
 
     var fbAuth = FirebaseService.getFirebaseAuth();
