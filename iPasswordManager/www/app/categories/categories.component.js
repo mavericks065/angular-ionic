@@ -20,9 +20,6 @@
   function CategoriesController($scope, $state, $ionicPopup, $stateParams,
     $cipherFactory, FirebaseService) {
 
-    $scope.masterPassword = $stateParams.masterPassword;
-    $scope.categories = [];
-
     var fbAuth = FirebaseService.getFirebaseAuth();
 
     if (fbAuth) {
@@ -33,11 +30,20 @@
       $state.go('authentication');
     }
 
-    $scope.list = function() {
+    var vm = this;
+    vm.masterPassword = $stateParams.masterPassword;
+    vm.categories = [];
+
+    vm.list = list;
+    vm.add = add;
+
+    // internal functions
+
+    function list() {
       syncObject.$loaded().then(function() {
         for (var key in $scope.fireBaseData.categories) {
           if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
-            $scope.categories.push({
+            vm.categories.push({
               id: key,
               category: $scope.fireBaseData.categories[key].category
               // $cipherFactory.decrypt($scope.fireBaseData.categories[key].category.cipherText,
@@ -47,25 +53,25 @@
           }
         }
       });
-    };
+    }
 
-    $scope.add = function() {
+    function add() {
       $ionicPopup.prompt({
         title: 'Enter a new category',
         inputType: 'text'
       })
       .then(function(result) {
-        if (result !== undefined) {
-          if ($scope.fireBaseData.categories === undefined) {
+        if (result) {
+          if (!$scope.fireBaseData.categories) {
             $scope.fireBaseData.categories = {};
           }
-          if ($scope.fireBaseData.categories[result.toSHA1()] === undefined) {
+          if (!$scope.fireBaseData.categories[result.toSHA1()]) {
             $scope.fireBaseData.categories[result.toSHA1()] = {
               category: result,
               // before : $cipherFactory.encrypt(result, $scope.masterPassword),
               digitalFootprints: {}
             };
-            $scope.categories.push({
+            vm.categories.push({
               id: result.toSHA1(),
               category: result
             });
@@ -74,6 +80,6 @@
           console.log('Action not completed');
         }
       });
-    };
+    }
   }
 })();

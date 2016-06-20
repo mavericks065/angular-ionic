@@ -11,7 +11,7 @@
     .controller('PasswordController', PasswordController);
 
   function PasswordController($scope, $stateParams, $state, $cipherFactory,
-      $ionicHistory, FirebaseService) {
+    $ionicHistory, FirebaseService) {
 
     $scope.masterPassword = $stateParams.masterPassword;
     $scope.categoryId = $stateParams.categoryId;
