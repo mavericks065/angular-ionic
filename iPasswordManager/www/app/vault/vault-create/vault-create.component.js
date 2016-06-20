@@ -42,20 +42,8 @@
       $state.go('authentication');
     }
 
-    vm.unlock = unlock;
     vm.create = create;
     // vm.reset = reset;
-
-    function unlock(masterPassword) {
-      vm.syncObject.$loaded().then(function() {
-        var decipherPhrase = $cipherFactory.decrypt($scope.fireBaseData.masterPassword.cipherText,
-          masterPassword, $scope.fireBaseData.masterPassword.salt, $scope.fireBaseData.masterPassword.iv,
-          {output: 'hex'});
-        if (decipherPhrase === 'Authenticated'.toHex()) {
-          $state.go('tab.categories', {masterPassword: masterPassword});
-        }
-      });
-    }
 
     function create(masterPassword) {
       vm.syncObject.$loaded().then(function() {

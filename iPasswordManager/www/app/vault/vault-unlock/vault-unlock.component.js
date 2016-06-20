@@ -43,7 +43,6 @@
     }
 
     vm.unlock = unlock;
-    vm.create = create;
     // vm.reset = reset;
 
     function unlock(masterPassword) {
@@ -53,22 +52,6 @@
           {output: 'hex'});
         if (decipherPhrase === 'Authenticated'.toHex()) {
           $state.go('tab.categories', {masterPassword: masterPassword});
-        }
-      });
-    }
-
-    function create(masterPassword) {
-      vm.syncObject.$loaded().then(function() {
-        // vm.userReference.child('masterPassword').set($cipherFactory.encrypt('Authenticated',
-        //                                               masterPassword),
-        //                                               function() {
-        //   // there is an error
-        //   $state.go('locked');
-        // });
-        var result = FirebaseService.setValue(vm.userReference, 'masterPassword',
-          $cipherFactory.encrypt('Authenticated', masterPassword));
-        if (result) {
-          $state.go('locked');
         }
       });
     }
