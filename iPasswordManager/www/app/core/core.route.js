@@ -59,24 +59,33 @@
         })
         .state('passwords', {
           url: '/passwords/:categoryId/:masterPassword',
-          templateUrl: 'app/passwords/password-list.view.html',
-          controller: 'PasswordController as passwordCtrl',
-          cache: false
+          cache: false,
+          views: {
+            '': {
+              template: '<password-list></password-list>'
+            }
+          }
         })
         .state('newpassword', {
           url: '/newpassword/:categoryId/:masterPassword',
-          templateUrl: 'app/passwords/password-new.view.html',
-          controller: 'PasswordController as passwordCtrl'
+          views: {
+            '': {
+              template: '<password-form></password-form>'
+            }
+          }
         })
-        .state('editpassword', {
-          url: '/editpassword/:categoryId/:masterPassword/:passwordId',
-          templateUrl: 'app/passwords/password-new.view.html',
-          controller: 'PasswordController as passwordCtrl'
-        })
+        // .state('editpassword', {
+        //   url: '/editpassword/:categoryId/:masterPassword/:passwordId',
+        //   templateUrl: 'app/passwords/password-new.view.html',
+        //   controller: 'PasswordController as passwordCtrl'
+        // })
         .state('viewpassword', {
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
-          templateUrl: 'app/passwords/password-display.view.html',
-          controller: 'PasswordController as passwordCtrl'
+          views: {
+            '': {
+              template: '<password-display></password-display>'
+            }
+          }
         });
       $urlRouterProvider.otherwise('/locked');
     });
