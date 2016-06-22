@@ -27,27 +27,29 @@
     vm.categoryId = $stateParams.categoryId;
     vm.digitalFootprints = [];
 
-    var fbAuth = FirebaseService.getFirebaseAuth();
-
-    if (fbAuth) {
-      var categoryReference = FirebaseService.getCategoryReference(fbAuth.uid,
-        vm.categoryId);
-      var passwordsReference = FirebaseService.getPasswordsReference(fbAuth.uid,
-        vm.categoryId);
-      var syncObject = FirebaseService.synchronize(categoryReference);
-
-      syncObject.$bindTo($scope, 'firebaseData');
-    } else {
-      $state.go('authentication');
-    }
-
     vm.list = list;
     vm.back = back;
 
+    init();
+
     // internal functions
 
+    function init() {
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
+
+      if (vm.fbAuth) {
+        vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
+          vm.categoryId);
+        vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
+
+        vm.syncObject.$bindTo($scope, 'firebaseData');
+      } else {
+        $state.go('authentication');
+      }
+    }
+
     function list() {
-      syncObject.$loaded().then(function() {
+      vm.syncObject.$loaded().then(function() {
         var encryptedPasswords = $scope.firebaseData.digitalFootprints;
         for (var key in encryptedPasswords) {
           if (encryptedPasswords.hasOwnProperty(key)) {
