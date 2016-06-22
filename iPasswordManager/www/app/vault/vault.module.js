@@ -2,6 +2,7 @@
   'use strict';
 
   angular.module('ipmApp.vault', [
-    'ipmApp.vault.controller'
+    'ipmApp.vault.unlock',
+    'ipmApp.vault.create'
   ]);
 })();

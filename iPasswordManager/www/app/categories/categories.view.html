@@ -1,10 +1,12 @@
-<ion-view title="Categories" ng-init="list()">
-  <ion-nav-buttons side="right">
-    <button class="right button button-icon icon ion-plus" ng-click="add()"></button>
-  </ion-nav-buttons>
+<ion-view ng-init="$ctrl.list()">
+  <ion-header-bar class="bar-stable">
+    <h1 class="title">Categories</h1>
+    <button class="right button button-icon icon ion-plus" ng-click="$ctrl.add()"></button>
+  </ion-header-bar>
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="item in categories" ui-sref="passwords({categoryId: item.id, masterPassword: masterPassword})">
+      <ion-item ng-repeat="item in $ctrl.categories"
+                ui-sref="passwords({categoryId: item.id, masterPassword: $ctrl.masterPassword})">
         {{item.category}}
       </ion-item>
     </ion-list>

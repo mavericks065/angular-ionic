@@ -3,7 +3,7 @@
 
   angular
     .module('ipmApp.core.route', [
-      'ipmApp.authenticationLogin',
+      'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
       'ipmApp.passwords'
@@ -12,8 +12,11 @@
       $stateProvider
         .state('authentication', {
           url: '/authentication',
-          templateUrl: 'app/authentication/authentication-login.view.html',
-          controller: 'AuthenticationController as authenticationCtrl'
+          views: {
+            '': {
+              template: '<authentication></authentication>'
+            }
+          }
         })
         .state('tab', {
           url: '/tab',
@@ -22,21 +25,26 @@
         })
         .state('locked', {
           url: '/locked',
-          templateUrl: 'app/vault/locked.view.html',
-          controller: 'VaultController as vaultCtrl',
-          cache: false
+          cache: false,
+          views: {
+            '': {
+              template: '<vault-unlock></vault-unlock>'
+            }
+          }
         })
         .state('createvault', {
           url: '/createvault',
-          templateUrl: 'app/vault/create-vault.view.html',
-          controller: 'VaultController as vaultCtrl'
+          views: {
+            '': {
+              template: '<vault-create></vault-create>'
+            }
+          }
         })
         .state('tab.categories', {
           url: '/categories/:masterPassword',
           views: {
             'tab-categories': {
-              templateUrl: 'app/categories/categories.view.html',
-              controller: 'CategoryController as categoryCtrl'
+              template: '<categories></categories>'
             }
           }
         })
@@ -51,24 +59,33 @@
         })
         .state('passwords', {
           url: '/passwords/:categoryId/:masterPassword',
-          templateUrl: 'app/passwords/password-list.view.html',
-          controller: 'PasswordController as passwordCtrl',
-          cache: false
+          cache: false,
+          views: {
+            '': {
+              template: '<password-list></password-list>'
+            }
+          }
         })
         .state('newpassword', {
           url: '/newpassword/:categoryId/:masterPassword',
-          templateUrl: 'app/passwords/password-new.view.html',
-          controller: 'PasswordController as passwordCtrl'
+          views: {
+            '': {
+              template: '<password-form></password-form>'
+            }
+          }
         })
-        .state('editpassword', {
-          url: '/editpassword/:categoryId/:masterPassword/:passwordId',
-          templateUrl: 'app/passwords/password-new.view.html',
-          controller: 'PasswordController as passwordCtrl'
-        })
+        // .state('editpassword', {
+        //   url: '/editpassword/:categoryId/:masterPassword/:passwordId',
+        //   templateUrl: 'app/passwords/password-new.view.html',
+        //   controller: 'PasswordController as passwordCtrl'
+        // })
         .state('viewpassword', {
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
-          templateUrl: 'app/passwords/password-display.view.html',
-          controller: 'PasswordController as passwordCtrl'
+          views: {
+            '': {
+              template: '<password-display></password-display>'
+            }
+          }
         });
       $urlRouterProvider.otherwise('/locked');
     });

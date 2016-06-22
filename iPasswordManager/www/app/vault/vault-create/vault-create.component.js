@@ -2,16 +2,24 @@
   'use strict';
 
   angular
-    .module('ipmApp.vault.controller', [
+    .module('ipmApp.vault.create', [
       'ionic',
       'firebase',
       'ipmApp.cipher.service',
       'ipmApp.core.firebase.service',
       'ipmApp.core.constants'
     ])
-    .controller('VaultController', VaultController);
+    .component('vaultCreate', vaultCreate());
 
-  function VaultController($scope, $state, $ionicHistory, $cipherFactory,
+  function vaultCreate() {
+    var component = {
+      templateUrl: 'app/vault/vault-create/vault-create.view.html',
+      controller: VaultCreateController
+    };
+    return component;
+  }
+
+  function VaultCreateController($scope, $state, $ionicHistory, $cipherFactory,
     FirebaseService) {
 
     var fbAuth = FirebaseService.getFirebaseAuth();
@@ -34,20 +42,8 @@
       $state.go('authentication');
     }
 
-    vm.unlock = unlock;
     vm.create = create;
     // vm.reset = reset;
-
-    function unlock(masterPassword) {
-      vm.syncObject.$loaded().then(function() {
-        var decipherPhrase = $cipherFactory.decrypt($scope.fireBaseData.masterPassword.cipherText,
-          masterPassword, $scope.fireBaseData.masterPassword.salt, $scope.fireBaseData.masterPassword.iv,
-          {output: 'hex'});
-        if (decipherPhrase === 'Authenticated'.toHex()) {
-          $state.go('tab.categories', {masterPassword: masterPassword});
-        }
-      });
-    }
 
     function create(masterPassword) {
       vm.syncObject.$loaded().then(function() {

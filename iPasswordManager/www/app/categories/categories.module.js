@@ -2,6 +2,6 @@
   'use strict';
 
   angular.module('ipmApp.categories', [
-    'ipmApp.categories.controller'
+    'ipmApp.categories.component'
   ]);
 })();

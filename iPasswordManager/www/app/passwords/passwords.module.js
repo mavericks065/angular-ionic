@@ -2,6 +2,8 @@
   'use strict';
 
   angular.module('ipmApp.passwords', [
-    'ipmApp.passwords.controller'
+    'ipmApp.passwords.list',
+    'ipmApp.passwords.display',
+    'ipmApp.passwords.form'
   ]);
 })();

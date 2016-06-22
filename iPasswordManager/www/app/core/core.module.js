@@ -5,7 +5,7 @@
     'ipmApp.core.constants',
     'ipmApp.core.route',
     'ipmApp.core.firebase.service',
-    'ipmApp.authenticationLogin',
+    'ipmApp.authentication',
     'ipmApp.vault',
     'ipmApp.categories',
     'ipmApp.passwords',
