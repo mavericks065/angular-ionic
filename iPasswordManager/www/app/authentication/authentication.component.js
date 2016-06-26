@@ -26,9 +26,9 @@
       disableBack: true
     });
 
-    var self = this;
-    self.login = login;
-    self.register = register;
+    var vm = this;
+    vm.login = login;
+    vm.register = register;
 
     // internal functions
 

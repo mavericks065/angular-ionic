@@ -20,27 +20,32 @@
   function CategoriesController($scope, $state, $ionicPopup, $stateParams,
     $cipherFactory, FirebaseService) {
 
-    var fbAuth = FirebaseService.getFirebaseAuth();
-
-    if (fbAuth) {
-      var categoriesReference = FirebaseService.getUserReference(fbAuth.uid);
-      var syncObject = FirebaseService.synchronize(categoriesReference);
-      syncObject.$bindTo($scope, 'fireBaseData');
-    } else {
-      $state.go('authentication');
-    }
-
     var vm = this;
-    vm.masterPassword = $stateParams.masterPassword;
-    vm.categories = [];
 
     vm.list = list;
     vm.add = add;
 
+    vm.$onInit = init;
+
     // internal functions
 
+    function init() {
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
+
+      if (vm.fbAuth) {
+        vm.categoriesReference = FirebaseService.getUserReference(vm.fbAuth.uid);
+        vm.syncObject = FirebaseService.synchronize(vm.categoriesReference);
+        vm.syncObject.$bindTo($scope, 'fireBaseData');
+      } else {
+        $state.go('authentication');
+      }
+
+      vm.masterPassword = $stateParams.masterPassword;
+      vm.categories = [];
+    }
+
     function list() {
-      syncObject.$loaded().then(function() {
+      vm.syncObject.$loaded().then(function() {
         for (var key in $scope.fireBaseData.categories) {
           if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
             vm.categories.push({

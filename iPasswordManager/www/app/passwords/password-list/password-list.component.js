@@ -23,18 +23,19 @@
 
     var vm = this;
 
-    vm.masterPassword = $stateParams.masterPassword;
-    vm.categoryId = $stateParams.categoryId;
-    vm.digitalFootprints = [];
-
     vm.list = list;
     vm.back = back;
 
-    init();
+    vm.$onInit = init;
 
     // internal functions
 
     function init() {
+
+      vm.masterPassword = $stateParams.masterPassword;
+      vm.categoryId = $stateParams.categoryId;
+      vm.digitalFootprints = [];
+
       vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {

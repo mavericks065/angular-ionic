@@ -83,7 +83,10 @@
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
           views: {
             '': {
-              template: '<password-display></password-display>'
+              template: '<password-display></password-display>',
+              // controller: function($stateParams) {
+              //   this.categoryId =
+              // }
             }
           }
         });
