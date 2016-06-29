@@ -28,7 +28,12 @@
           cache: false,
           views: {
             '': {
-              template: '<vault-unlock></vault-unlock>'
+              template: '<vault mode="unlockVaultCtrl.VaultConstants.MODE.UNLOCK"></vault>',
+              controller: function(VaultConstants) {
+                var vm = this;
+                vm.VaultConstants = VaultConstants;
+              },
+              controllerAs: 'unlockVaultCtrl'
             }
           }
         })
@@ -36,7 +41,12 @@
           url: '/createvault',
           views: {
             '': {
-              template: '<vault-create></vault-create>'
+              template: '<vault mode="createVaultCtrl.VaultConstants.MODE.CREATE"></vault>',
+              controller: function(VaultConstants) {
+                var vm = this;
+                vm.VaultConstants = VaultConstants;
+              },
+              controllerAs: 'createVaultCtrl'
             }
           }
         })

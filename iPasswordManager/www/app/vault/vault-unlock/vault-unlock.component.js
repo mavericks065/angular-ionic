@@ -14,6 +14,9 @@
   function vaultUnlock() {
     var component = {
       templateUrl: 'app/vault/vault-unlock/vault-unlock.view.html',
+      bindings: {
+        userReference: '<'
+      },
       controller: VaultUnlockController
     };
     return component;
@@ -33,16 +36,12 @@
     vm.$onInit = init;
 
     vm.unlock = unlock;
-    // vm.reset = reset;
 
     // internal functions
 
     function init() {
 
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
-
-      if (vm.fbAuth) {
-        vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
+      if (vm.userReference) {
         // only way to  make the binding working :
         // http://stackoverflow.com/questions/29426985/angularfire-3-way-binding-without-scope
         vm.syncObject = FirebaseService.synchronize(vm.userReference);
@@ -62,15 +61,5 @@
         }
       });
     }
-
-    // function reset() {
-    //   vm.userReference.remove(function(error) {
-    //     if (error) {
-    //       console.error('ERROR: ' + error);
-    //     } else {
-    //       $state.go('createvault');
-    //     }
-    //   });
-    // }
   }
 })();

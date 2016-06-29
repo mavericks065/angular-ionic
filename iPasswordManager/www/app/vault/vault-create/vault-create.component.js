@@ -14,6 +14,10 @@
   function vaultCreate() {
     var component = {
       templateUrl: 'app/vault/vault-create/vault-create.view.html',
+      bindings: {
+        userReference: '<',
+        syncObject: '='
+      },
       controller: VaultCreateController
     };
     return component;
@@ -30,26 +34,10 @@
 
     var vm = this;
 
-    vm.$onInit = init;
-
     vm.create = create;
     // vm.reset = reset;
 
     // internal functions
-
-    function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
-
-      if (vm.fbAuth) {
-        vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
-        // only way to  make the binding working :
-        // http://stackoverflow.com/questions/29426985/angularfire-3-way-binding-without-scope
-        vm.syncObject = FirebaseService.synchronize(vm.userReference);
-        vm.syncObject.$bindTo($scope, 'fireBaseData');
-      } else {
-        $state.go('authentication');
-      }
-    }
 
     function create(masterPassword) {
       vm.syncObject.$loaded().then(function() {
