@@ -12,6 +12,9 @@
   function categories() {
     var component = {
       templateUrl: 'app/categories/categories.view.html',
+      bindings: {
+        masterPassword: '<'
+      },
       controller: CategoriesController
     };
     return component;
@@ -40,7 +43,6 @@
         $state.go('authentication');
       }
 
-      vm.masterPassword = $stateParams.masterPassword;
       vm.categories = [];
     }
 

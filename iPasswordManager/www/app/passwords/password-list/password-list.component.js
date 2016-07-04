@@ -13,12 +13,16 @@
   function passwordList() {
     var component = {
       templateUrl: 'app/passwords/password-list/password-list.view.html',
+      bindings: {
+        masterPassword: '<',
+        categoryId: '<'
+      },
       controller: PasswordListController
     };
     return component;
   }
 
-  function PasswordListController($scope, $stateParams, $state, $cipherFactory,
+  function PasswordListController($scope, $state, $cipherFactory,
     $ionicHistory, FirebaseService) {
 
     var vm = this;
@@ -31,9 +35,6 @@
     // internal functions
 
     function init() {
-
-      vm.masterPassword = $stateParams.masterPassword;
-      vm.categoryId = $stateParams.categoryId;
       vm.digitalFootprints = [];
 
       vm.fbAuth = FirebaseService.getFirebaseAuth();

@@ -13,6 +13,10 @@
   function passwordForm() {
     var component = {
       templateUrl: 'app/passwords/password-form/password-form.view.html',
+      bindings: {
+        masterPassword: '<',
+        categoryId: '<'
+      },
       controller: PasswordFormController
     };
     return component;
@@ -32,8 +36,6 @@
 
     function init() {
 
-      vm.masterPassword = $stateParams.masterPassword;
-      vm.categoryId = $stateParams.categoryId;
       vm.digitalFootprints = [];
 
       vm.fbAuth = FirebaseService.getFirebaseAuth();
