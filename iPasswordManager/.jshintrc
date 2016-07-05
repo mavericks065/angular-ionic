@@ -55,7 +55,8 @@
         "angular": false,
         "cordova": false,
         "StatusBar": false,
-        "_": false
+        "_": false,
+        "forge": false
     },
     "predef": {
         "Firebase": false

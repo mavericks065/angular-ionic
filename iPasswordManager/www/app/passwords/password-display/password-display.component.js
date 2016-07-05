@@ -13,28 +13,31 @@
   function passwordDisplay() {
     var component = {
       templateUrl: 'app/passwords/password-display/password-display.view.html',
+      bindings: {
+        masterPassword: '<',
+        categoryId: '<',
+        passwordId: '<'
+      },
       controller: PasswordDisplayController
     };
     return component;
   }
 
-  function PasswordDisplayController($scope, $stateParams, $state, $cipherFactory,
-    $ionicHistory, FirebaseService) {
+  function PasswordDisplayController($scope, $state, $cipherFactory, $ionicHistory,
+    FirebaseService) {
 
     var vm = this;
-
-    vm.masterPassword = $stateParams.masterPassword;
-    vm.categoryId = $stateParams.categoryId;
-    vm.digitalFootprints = [];
 
     vm.view = view;
     vm.back = back;
 
-    init();
+    vm.$onInit = init;
 
     // internal functions
 
     function init() {
+      vm.digitalFootprints = [];
+
       vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
@@ -50,7 +53,7 @@
 
     function view() {
       vm.syncObject.$loaded().then(function() {
-        var encryptedPassword = $scope.firebaseData.digitalFootprints[$stateParams.passwordId];
+        var encryptedPassword = $scope.firebaseData.digitalFootprints[vm.passwordId];
         vm.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
           vm.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
       });

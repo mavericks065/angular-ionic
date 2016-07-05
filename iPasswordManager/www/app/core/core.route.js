@@ -28,7 +28,12 @@
           cache: false,
           views: {
             '': {
-              template: '<vault-unlock></vault-unlock>'
+              template: '<vault mode="unlockVaultCtrl.VaultConstants.MODE.UNLOCK"></vault>',
+              controller: function(VaultConstants) {
+                var vm = this;
+                vm.VaultConstants = VaultConstants;
+              },
+              controllerAs: 'unlockVaultCtrl'
             }
           }
         })
@@ -36,15 +41,30 @@
           url: '/createvault',
           views: {
             '': {
-              template: '<vault-create></vault-create>'
+              template: '<vault mode="createVaultCtrl.VaultConstants.MODE.CREATE"></vault>',
+              controller: function(VaultConstants) {
+                var vm = this;
+                vm.VaultConstants = VaultConstants;
+              },
+              controllerAs: 'createVaultCtrl'
             }
           }
         })
         .state('tab.categories', {
           url: '/categories/:masterPassword',
+          resolve: {
+            masterPassword: function($stateParams) {
+              return $stateParams.masterPassword;
+            }
+          },
           views: {
             'tab-categories': {
-              template: '<categories></categories>'
+              template: '<categories master-password="categoryCtrl.masterPassword"></categories>',
+              controller: function(masterPassword) {
+                var vm = this;
+                vm.masterPassword = masterPassword;
+              },
+              controllerAs: 'categoryCtrl'
             }
           }
         })
@@ -60,17 +80,47 @@
         .state('passwords', {
           url: '/passwords/:categoryId/:masterPassword',
           cache: false,
+          resolve: {
+            masterPassword: function($stateParams) {
+              return $stateParams.masterPassword;
+            },
+            categoryId: function($stateParams) {
+              return $stateParams.categoryId;
+            }
+          },
           views: {
             '': {
-              template: '<password-list></password-list>'
+              template: ['<password-list master-password="pwdListCtrl.masterPassword"',
+                'category-id="pwdListCtrl.categoryId"></password-list>'].join(' '),
+              controller: function(masterPassword, categoryId) {
+                var vm = this;
+                vm.masterPassword = masterPassword;
+                vm.categoryId = categoryId;
+              },
+              controllerAs: 'pwdListCtrl'
             }
           }
         })
         .state('newpassword', {
           url: '/newpassword/:categoryId/:masterPassword',
+          resolve: {
+            masterPassword: function($stateParams) {
+              return $stateParams.masterPassword;
+            },
+            categoryId: function($stateParams) {
+              return $stateParams.categoryId;
+            }
+          },
           views: {
             '': {
-              template: '<password-form></password-form>'
+              template: ['<password-form master-password="createPwdCtrl.masterPassword"',
+                'category-id="createPwdCtrl.categoryId"></password-form>'].join(' '),
+              controller: function(masterPassword, categoryId) {
+                var vm = this;
+                vm.masterPassword = masterPassword;
+                vm.categoryId = categoryId;
+              },
+              controllerAs: 'createPwdCtrl'
             }
           }
         })
@@ -81,9 +131,29 @@
         // })
         .state('viewpassword', {
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
+          resolve: {
+            masterPassword: function($stateParams) {
+              return $stateParams.masterPassword;
+            },
+            categoryId: function($stateParams) {
+              return $stateParams.categoryId;
+            },
+            passwordId: function($stateParams) {
+              return $stateParams.passwordId;
+            }
+          },
           views: {
             '': {
-              template: '<password-display></password-display>'
+              template:  ['<password-display master-password="viewPwdCtrl.masterPassword"',
+                'category-id="viewPwdCtrl.categoryId" password-id="viewPwdCtrl.passwordId">',
+                '</password-form>'].join(' '),
+              controller: function(masterPassword, categoryId, passwordId) {
+                var vm = this;
+                vm.masterPassword = masterPassword;
+                vm.categoryId = categoryId;
+                vm.passwordId = passwordId;
+              },
+              controllerAs: 'viewPwdCtrl'
             }
           }
         });

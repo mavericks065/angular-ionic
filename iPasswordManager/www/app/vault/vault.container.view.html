@@ -1,0 +1,7 @@
+<div ng-if="$ctrl.mode === $ctrl.VaultConstants.MODE.UNLOCK">
+  <vault-unlock user-reference="$ctrl.userReference"></vault-unlock>
+</div>
+<div ng-if="$ctrl.mode === $ctrl.VaultConstants.MODE.CREATE">
+  <vault-create user-reference="$ctrl.userReference"
+                sync-object="$ctrl.syncObject"></vault-create>
+</div>
