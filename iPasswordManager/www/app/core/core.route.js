@@ -6,7 +6,8 @@
       'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
-      'ipmApp.passwords'
+      'ipmApp.passwords',
+      'ipmApp.core.firebase.service'
     ])
     .config(function($stateProvider, $urlRouterProvider) {
       $stateProvider
@@ -90,7 +91,8 @@
           },
           views: {
             '': {
-              template: ['<password-list master-password="pwdListCtrl.masterPassword"',
+              template: [
+                '<password-list master-password="pwdListCtrl.masterPassword"',
                 'category-id="pwdListCtrl.categoryId"></password-list>'].join(' '),
               controller: function(masterPassword, categoryId) {
                 var vm = this;
@@ -113,7 +115,8 @@
           },
           views: {
             '': {
-              template: ['<password-form master-password="createPwdCtrl.masterPassword"',
+              template: [
+                '<password-form master-password="createPwdCtrl.masterPassword"',
                 'category-id="createPwdCtrl.categoryId"></password-form>'].join(' '),
               controller: function(masterPassword, categoryId) {
                 var vm = this;
@@ -124,11 +127,38 @@
             }
           }
         })
-        // .state('editpassword', {
-        //   url: '/editpassword/:categoryId/:masterPassword/:passwordId',
-        //   templateUrl: 'app/passwords/password-new.view.html',
-        //   controller: 'PasswordController as passwordCtrl'
-        // })
+        .state('editpassword', {
+          url: '/editpassword/:categoryId/:masterPassword/:passwordId',
+          resolve: {
+            masterPassword: function($stateParams) {
+              return $stateParams.masterPassword;
+            },
+            categoryId: function($stateParams) {
+              return $stateParams.categoryId;
+            },
+            passwordId: function($stateParams) {
+              return $stateParams.passwordId;
+            }
+          },
+          views: {
+            '': {
+              template:  [
+                '<password-form master-password="editPwdCtrl.masterPassword"',
+                'category-id="editPwdCtrl.categoryId"',
+                'password-id="editPwdCtrl.passwordId">',
+                '</password-form>'].join(' '),
+              controller: function($scope, $state, FirebaseService, $cipherFactory,
+                masterPassword, categoryId, passwordId) {
+
+                var vm = this;
+                vm.masterPassword = masterPassword;
+                vm.categoryId = categoryId;
+                vm.passwordId = passwordId;
+              },
+              controllerAs: 'editPwdCtrl'
+            }
+          }
+        })
         .state('viewpassword', {
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
           resolve: {
@@ -144,9 +174,10 @@
           },
           views: {
             '': {
-              template:  ['<password-display master-password="viewPwdCtrl.masterPassword"',
+              template:  [
+                '<password-display master-password="viewPwdCtrl.masterPassword"',
                 'category-id="viewPwdCtrl.categoryId" password-id="viewPwdCtrl.passwordId">',
-                '</password-form>'].join(' '),
+                '</password-display>'].join(' '),
               controller: function(masterPassword, categoryId, passwordId) {
                 var vm = this;
                 vm.masterPassword = masterPassword;
