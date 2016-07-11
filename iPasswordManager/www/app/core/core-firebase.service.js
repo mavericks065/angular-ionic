@@ -16,6 +16,7 @@
     self.getUserReference = getUserReference;
     self.getCategoryReference = getCategoryReference;
     self.getPasswordsReference = getPasswordsReference;
+    self.getPasswordReference = getPasswordReference;
     self.synchronize = synchronize;
     self.setValue = setValue;
 
@@ -36,6 +37,11 @@
     function getPasswordsReference(uid, categoryId) {
       return fb.child('users/' + uid + '/categories/' + categoryId +
         '/digitalFootprints');
+    }
+
+    function getPasswordReference(uid, categoryId, digitalFootprintId) {
+      return fb.child('users/' + uid + '/categories/' + categoryId +
+        '/digitalFootprints/' + digitalFootprintId);
     }
 
     function synchronize(reference) {

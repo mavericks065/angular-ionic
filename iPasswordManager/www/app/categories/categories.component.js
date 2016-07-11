@@ -20,8 +20,7 @@
     return component;
   }
 
-  function CategoriesController($scope, $state, $ionicPopup, $stateParams,
-    $cipherFactory, FirebaseService) {
+  function CategoriesController($scope, $state, $ionicPopup, FirebaseService) {
 
     var vm = this;
 

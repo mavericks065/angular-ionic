@@ -29,6 +29,7 @@
     var vm = this;
 
     vm.view = view;
+    vm.editPassword = editPassword;
     vm.back = back;
 
     vm.$onInit = init;
@@ -36,8 +37,6 @@
     // internal functions
 
     function init() {
-      vm.digitalFootprints = [];
-
       vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
@@ -58,6 +57,16 @@
           vm.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
       });
     }
+
+    function editPassword() {
+      $state.go('editpassword', {
+        masterPassword: vm.masterPassword,
+        categoryId: vm.categoryId,
+        passwordId: vm.passwordId,
+        password: vm.digitalFootprint
+      });
+    }
+
     function back() {
       $ionicHistory.goBack();
     }

@@ -19,7 +19,7 @@
   }
 
   function AuthenticationController($state, $ionicHistory, $ionicPopup,
-    $firebaseAuth, AuthenticationService) {
+    AuthenticationService) {
 
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
