@@ -37,8 +37,6 @@
     // internal functions
 
     function init() {
-      vm.digitalFootprints = [];
-
       vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {

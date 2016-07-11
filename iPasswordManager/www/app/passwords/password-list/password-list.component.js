@@ -22,8 +22,7 @@
     return component;
   }
 
-  function PasswordListController($scope, $state, $cipherFactory,
-    $ionicHistory, FirebaseService) {
+  function PasswordListController($scope, $state, $cipherFactory, FirebaseService) {
 
     var vm = this;
 
@@ -66,7 +65,7 @@
     }
 
     function back() {
-      $ionicHistory.goBack();
+      $state.go('tab.categories', {masterPassword: vm.masterPassword});
     }
   }
 })();

@@ -39,17 +39,10 @@
     function init() {
       vm.fbAuth = FirebaseService.getFirebaseAuth();
       if (vm.fbAuth) {
-        vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
-          vm.categoryId);
+        bindReferences();
 
-        vm.passwordsReference = FirebaseService.getPasswordsReference(vm.fbAuth.uid,
-          vm.categoryId);
-        vm.passwordReference = FirebaseService.getPasswordReference(vm.fbAuth.uid,
-          vm.categoryId, vm.passwordId);
         vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
-
         vm.syncObject.$bindTo($scope, 'firebaseData');
-
       } else {
         $state.go('authentication');
       }
@@ -57,6 +50,16 @@
       if (vm.passwordId) {
         findDigitalFootPrint();
       }
+    }
+
+    function bindReferences() {
+      vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
+        vm.categoryId);
+
+      vm.passwordsReference = FirebaseService.getPasswordsReference(vm.fbAuth.uid,
+        vm.categoryId);
+      vm.passwordReference = FirebaseService.getPasswordReference(vm.fbAuth.uid,
+        vm.categoryId, vm.passwordId);
     }
 
     function findDigitalFootPrint() {
