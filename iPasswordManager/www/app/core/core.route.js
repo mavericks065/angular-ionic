@@ -161,6 +161,7 @@
         })
         .state('viewpassword', {
           url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
+          cache: false,
           resolve: {
             masterPassword: function($stateParams) {
               return $stateParams.masterPassword;
