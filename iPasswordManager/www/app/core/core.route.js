@@ -117,11 +117,13 @@
             '': {
               template: [
                 '<password-form master-password="createPwdCtrl.masterPassword"',
-                'category-id="createPwdCtrl.categoryId"></password-form>'].join(' '),
-              controller: function(masterPassword, categoryId) {
+                'category-id="createPwdCtrl.categoryId"',
+                'mode="editPwdCtrl.mode"></password-form>'].join(' '),
+              controller: function(PasswordsConstants, masterPassword, categoryId) {
                 var vm = this;
                 vm.masterPassword = masterPassword;
                 vm.categoryId = categoryId;
+                vm.mode = PasswordsConstants.MODE.CREATE;
               },
               controllerAs: 'createPwdCtrl'
             }
@@ -145,15 +147,17 @@
               template:  [
                 '<password-form master-password="editPwdCtrl.masterPassword"',
                 'category-id="editPwdCtrl.categoryId"',
-                'password-id="editPwdCtrl.passwordId">',
+                'password-id="editPwdCtrl.passwordId"',
+                'mode="editPwdCtrl.mode">',
                 '</password-form>'].join(' '),
               controller: function($scope, $state, FirebaseService, $cipherFactory,
-                masterPassword, categoryId, passwordId) {
+                PasswordsConstants, masterPassword, categoryId, passwordId) {
 
                 var vm = this;
                 vm.masterPassword = masterPassword;
                 vm.categoryId = categoryId;
                 vm.passwordId = passwordId;
+                vm.mode = PasswordsConstants.MODE.UPDATE;
               },
               controllerAs: 'editPwdCtrl'
             }
