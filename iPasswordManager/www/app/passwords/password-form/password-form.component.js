@@ -17,6 +17,7 @@
       bindings: {
         masterPassword: '<',
         categoryId: '<',
+        mode: '<',
         passwordId: '=?'
       },
       controller: PasswordFormController
@@ -30,6 +31,7 @@
     var vm = this;
 
     vm.save = save;
+    vm.remove = remove;
     vm.back = back;
 
     vm.$onInit = init;
@@ -82,6 +84,15 @@
             categoryId: vm.categoryId,
             masterPassword: vm.masterPassword
           });
+        });
+      });
+    }
+
+    function remove() {
+      PasswordsService.removePassword(vm.passwordReference).then(function() {
+        $state.go('passwords', {
+          categoryId: vm.categoryId,
+          masterPassword: vm.masterPassword
         });
       });
     }

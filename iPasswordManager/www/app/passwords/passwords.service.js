@@ -10,8 +10,13 @@
     var self = this;
 
     self.savePassword = savePassword;
+    self.removePassword = removePassword;
 
     // Internal functions
+
+    function removePassword(firebaseReference) {
+      return firebaseReference.remove();
+    }
 
     function savePassword(firebaseReference, password, masterPassword, isUpdate) {
       var encrytedPassword = $cipherFactory.encrypt(JSON.stringify(password),
