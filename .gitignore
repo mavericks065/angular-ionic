@@ -2,7 +2,5 @@ iSecretVault/node_modules
 iSecretVault/www/lib
 .DS_Store
 iSecretVault/platforms
-iSecretVault/resources/android
-iSecretVault/resources/ios
 iSecretVault/plugins
 iSecretVault/node_modules
