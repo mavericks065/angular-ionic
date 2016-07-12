@@ -1,5 +1,5 @@
 {
-  "name": "iPasswordManager",
+  "name": "iSecretVault",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#master"

@@ -1,6 +1,6 @@
-iPasswordManager/node_modules
-iPasswordManager/www/lib
+iSecretVault/node_modules
+iSecretVault/www/lib
 .DS_Store
-iPasswordManager/platforms
-iPasswordManager/plugins
-iPasswordManager/node_modules
+iSecretVault/platforms
+iSecretVault/plugins
+iSecretVault/node_modules

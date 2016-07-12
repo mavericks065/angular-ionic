@@ -1,5 +1,5 @@
 {
-  "name": "iPasswordManager",
+  "name": "iSecretVault",
   "app_id": "ea84d7a8",
   "gulpStartupTasks": [
     "sass",
