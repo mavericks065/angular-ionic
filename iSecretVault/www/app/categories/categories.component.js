@@ -27,8 +27,6 @@
 
     vm.$onInit = init;
 
-    vm.add = add;
-
     // internal functions
 
     function init() {
@@ -39,6 +37,7 @@
         vm.syncObject = FirebaseService.synchronize(vm.categoriesReference);
         vm.syncObject.$bindTo($scope, 'fireBaseData');
 
+        vm.add = add;
       } else {
         $state.go('authentication');
       }
@@ -64,11 +63,12 @@
               id: result.toSHA1(),
               category: result
             });
-            sortCategories();
           }
         } else {
           console.log('Action not completed');
         }
+      }).then(function() {
+        findAndSortCategories();
       });
     }
 
@@ -86,6 +86,7 @@
             });
           }
         }
+      }).then(function() {
         sortCategories();
       });
     }
