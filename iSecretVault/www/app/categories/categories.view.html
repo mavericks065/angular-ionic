@@ -1,4 +1,4 @@
-<ion-view ng-init="$ctrl.list()">
+<ion-view>
   <ion-header-bar class="bar-stable">
     <h1 class="title">Categories</h1>
     <button class="right button button-clear" ng-click="$ctrl.add()">
@@ -7,7 +7,9 @@
   </ion-header-bar>
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="item in $ctrl.categories"
+      <ion-item auto-list-divider
+                auto-list-divider-value="{{ item.category }}"
+                ng-repeat="item in $ctrl.categories"
                 ui-sref="passwords({categoryId: item.id, masterPassword: $ctrl.masterPassword})">
         {{ item.category }}
       </ion-item>

@@ -5,7 +5,8 @@
     .module('ipmApp.categories.component', [
       'ionic',
       'firebase',
-      'ipmApp.core.firebase.service'
+      'ipmApp.core.firebase.service',
+      'ionic.ion.autoListDivider'
     ])
     .component('categories', categories());
 
@@ -24,10 +25,9 @@
 
     var vm = this;
 
-    vm.list = list;
-    vm.add = add;
-
     vm.$onInit = init;
+
+    vm.add = add;
 
     // internal functions
 
@@ -38,35 +38,18 @@
         vm.categoriesReference = FirebaseService.getUserReference(vm.fbAuth.uid);
         vm.syncObject = FirebaseService.synchronize(vm.categoriesReference);
         vm.syncObject.$bindTo($scope, 'fireBaseData');
+
       } else {
         $state.go('authentication');
       }
-
-      vm.categories = [];
-    }
-
-    function list() {
-      vm.syncObject.$loaded().then(function() {
-        for (var key in $scope.fireBaseData.categories) {
-          if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
-            vm.categories.push({
-              id: key,
-              category: $scope.fireBaseData.categories[key].category
-              // $cipherFactory.decrypt($scope.fireBaseData.categories[key].category.cipherText,
-              //   $scope.masterPassword, $scope.fireBaseData.categories[key].category.salt,
-              //   $scope.fireBaseData.categories[key].category.iv)
-            });
-          }
-        }
-      });
+      findAndSortCategories();
     }
 
     function add() {
       $ionicPopup.prompt({
         title: 'Enter a new category',
         inputType: 'text'
-      })
-      .then(function(result) {
+      }).then(function(result) {
         if (result) {
           if (!$scope.fireBaseData.categories) {
             $scope.fireBaseData.categories = {};
@@ -81,10 +64,35 @@
               id: result.toSHA1(),
               category: result
             });
+            sortCategories();
           }
         } else {
           console.log('Action not completed');
         }
+      });
+    }
+
+    function findAndSortCategories() {
+      vm.categories = [];
+      vm.syncObject.$loaded().then(function() {
+        for (var key in $scope.fireBaseData.categories) {
+          if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
+            vm.categories.push({
+              id: key,
+              category: $scope.fireBaseData.categories[key].category
+              // $cipherFactory.decrypt($scope.fireBaseData.categories[key].category.cipherText,
+              //   $scope.masterPassword, $scope.fireBaseData.categories[key].category.salt,
+              //   $scope.fireBaseData.categories[key].category.iv)
+            });
+          }
+        }
+        sortCategories();
+      });
+    }
+
+    function sortCategories() {
+      vm.categories = _.sortBy(vm.categories, function(category) {
+        return category.category;
       });
     }
   }
