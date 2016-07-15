@@ -7,11 +7,14 @@
   ])
   .service('FirebaseService', FirebaseService);
 
-  function FirebaseService($injector, $firebaseObject) {
-    var CoreConstants = $injector.get('CoreConstants');
-    var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
+  function FirebaseService($firebaseObject, $firebaseAuth) {
+
+    init();
+
+    var fb = firebase.database().ref();
 
     var self = this;
+    self.getFirebaseRef = getFirebaseRef;
     self.getFirebaseAuth = getFirebaseAuth;
     self.getUserReference = getUserReference;
     self.getCategoryReference = getCategoryReference;
@@ -23,8 +26,22 @@
 
     // Internal functions
 
+    function init() {
+      var config = {
+        apiKey: 'AIzaSyB0jTIOB88EkrMJhljCi09qhfSciPJneQc',
+        authDomain: 'ipasswordmanager.firebaseapp.com',
+        databaseURL: 'https://ipasswordmanager.firebaseio.com',
+        storageBucket: 'project-8977371397179982709.appspot.com'
+      };
+      firebase.initializeApp(config);
+    }
+
+    function getFirebaseRef() {
+      return fb;
+    }
+
     function getFirebaseAuth() {
-      return fb.getAuth();
+      return $firebaseAuth();
     }
 
     function getUserReference(uid) {

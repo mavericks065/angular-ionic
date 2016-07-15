@@ -6,6 +6,6 @@
   },
   "dependencies": {
     "lodash": "~4.6.1",
-    "angularfire": "^1.1.4"
+    "angularfire": "^2.0.1"
   }
 }

@@ -29,7 +29,10 @@
           cache: false,
           views: {
             '': {
-              template: '<vault mode="unlockVaultCtrl.VaultConstants.MODE.UNLOCK"></vault>',
+              template: [
+                '<vault mode="unlockVaultCtrl.VaultConstants.MODE.UNLOCK">',
+                '</vault>'
+              ].join(''),
               controller: function(VaultConstants) {
                 var vm = this;
                 vm.VaultConstants = VaultConstants;
@@ -42,7 +45,10 @@
           url: '/createvault',
           views: {
             '': {
-              template: '<vault mode="createVaultCtrl.VaultConstants.MODE.CREATE"></vault>',
+              template: [
+                '<vault mode="createVaultCtrl.VaultConstants.MODE.CREATE">',
+                '</vault>'
+              ].join(''),
               controller: function(VaultConstants) {
                 var vm = this;
                 vm.VaultConstants = VaultConstants;

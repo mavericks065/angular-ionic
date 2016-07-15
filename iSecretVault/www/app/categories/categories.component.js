@@ -32,7 +32,7 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
+      vm.fbAuth = FirebaseService.getFirebaseAuth().$getAuth();
 
       if (vm.fbAuth) {
         vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
