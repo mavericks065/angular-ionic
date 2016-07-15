@@ -6,6 +6,7 @@
       'ionic',
       'firebase',
       'ipmApp.core.firebase.service',
+      'ipmApp.categories.service',
       'ionic.ion.autoListDivider'
     ])
     .component('categories', categories());
@@ -21,7 +22,8 @@
     return component;
   }
 
-  function CategoriesController($scope, $state, $ionicPopup, FirebaseService) {
+  function CategoriesController($scope, $state, $ionicPopup, FirebaseService,
+    CategoriesService) {
 
     var vm = this;
 
@@ -33,8 +35,9 @@
       vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
-        vm.categoriesReference = FirebaseService.getUserReference(vm.fbAuth.uid);
-        vm.syncObject = FirebaseService.synchronize(vm.categoriesReference);
+        vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
+        vm.categoriesReference = FirebaseService.getCategoriesReference(vm.fbAuth.uid);
+        vm.syncObject = FirebaseService.synchronize(vm.userReference);
         vm.syncObject.$bindTo($scope, 'fireBaseData');
 
         vm.add = add;
@@ -54,15 +57,7 @@
             $scope.fireBaseData.categories = {};
           }
           if (!$scope.fireBaseData.categories[result.toSHA1()]) {
-            $scope.fireBaseData.categories[result.toSHA1()] = {
-              category: result,
-              // before : $cipherFactory.encrypt(result, $scope.masterPassword),
-              digitalFootprints: {}
-            };
-            vm.categories.push({
-              id: result.toSHA1(),
-              category: result
-            });
+            CategoriesService.insertCategory(vm.categoriesReference, result);
           }
         } else {
           console.log('Action not completed');
@@ -80,9 +75,6 @@
             vm.categories.push({
               id: key,
               category: $scope.fireBaseData.categories[key].category
-              // $cipherFactory.decrypt($scope.fireBaseData.categories[key].category.cipherText,
-              //   $scope.masterPassword, $scope.fireBaseData.categories[key].category.salt,
-              //   $scope.fireBaseData.categories[key].category.iv)
             });
           }
         }
