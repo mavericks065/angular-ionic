@@ -26,9 +26,6 @@
 
     var vm = this;
 
-    vm.list = list;
-    vm.back = back;
-
     vm.$onInit = init;
 
     // internal functions
@@ -36,7 +33,7 @@
     function init() {
       vm.digitalFootprints = [];
 
-      vm.fbAuth = FirebaseService.getFirebaseAuth().$getAuth();
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
         vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
@@ -44,9 +41,12 @@
         vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
 
         vm.syncObject.$bindTo($scope, 'firebaseData');
+
+        vm.back = back;
       } else {
         $state.go('authentication');
       }
+      list();
     }
 
     function list() {

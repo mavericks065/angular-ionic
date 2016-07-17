@@ -37,7 +37,7 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth().$getAuth();
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
         vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,

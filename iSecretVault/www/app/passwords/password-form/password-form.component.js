@@ -30,21 +30,21 @@
 
     var vm = this;
 
-    vm.save = save;
-    vm.remove = remove;
-    vm.back = back;
-
     vm.$onInit = init;
 
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth().$getAuth();
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
       if (vm.fbAuth) {
         bindReferences();
 
         vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
         vm.syncObject.$bindTo($scope, 'firebaseData');
+
+        vm.save = save;
+        vm.remove = remove;
+        vm.back = back;
       } else {
         $state.go('authentication');
       }

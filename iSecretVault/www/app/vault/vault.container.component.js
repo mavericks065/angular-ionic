@@ -46,7 +46,7 @@
     function init() {
 
       vm.VaultConstants = VaultConstants;
-      vm.fbAuth = FirebaseService.getFirebaseAuth().$getAuth();
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
         vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);

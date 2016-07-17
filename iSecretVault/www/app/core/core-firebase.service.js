@@ -11,7 +11,9 @@
 
     init();
 
+    /*jshint -W117 */
     var fb = firebase.database().ref();
+    /*jshint +W117 */
 
     var self = this;
     self.getFirebaseRef = getFirebaseRef;
@@ -33,7 +35,9 @@
         databaseURL: 'https://ipasswordmanager.firebaseio.com',
         storageBucket: 'project-8977371397179982709.appspot.com'
       };
+      /*jshint -W117 */
       firebase.initializeApp(config);
+      /*jshint +W117 */
     }
 
     function getFirebaseRef() {
@@ -41,7 +45,7 @@
     }
 
     function getFirebaseAuth() {
-      return $firebaseAuth();
+      return $firebaseAuth().$getAuth();
     }
 
     function getUserReference(uid) {
@@ -71,9 +75,7 @@
     }
 
     function setValue(reference, node, value) {
-      var result = reference.child(node).set(value, function() {
-        return 'onComplete';
-      });
+      var result = reference.child(node).set(value);
       return result;
     }
   }

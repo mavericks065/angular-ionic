@@ -32,7 +32,7 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth().$getAuth();
+      vm.fbAuth = FirebaseService.getFirebaseAuth();
 
       if (vm.fbAuth) {
         vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
@@ -53,9 +53,6 @@
         inputType: 'text'
       }).then(function(result) {
         if (result) {
-          if (!$scope.fireBaseData.categories) {
-            $scope.fireBaseData.categories = {};
-          }
           if (!$scope.fireBaseData.categories[result.toSHA1()]) {
             CategoriesService.insertCategory(vm.categoriesReference, result);
           }
