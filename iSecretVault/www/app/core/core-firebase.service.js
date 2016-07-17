@@ -15,6 +15,7 @@
     self.getFirebaseAuth = getFirebaseAuth;
     self.getUserReference = getUserReference;
     self.getCategoryReference = getCategoryReference;
+    self.getCategoriesReference = getCategoriesReference;
     self.getPasswordsReference = getPasswordsReference;
     self.getPasswordReference = getPasswordReference;
     self.synchronize = synchronize;
@@ -28,6 +29,10 @@
 
     function getUserReference(uid) {
       return fb.child('users/' + uid);
+    }
+
+    function getCategoriesReference(uid) {
+      return fb.child('users/' + uid + '/categories');
     }
 
     function getCategoryReference(uid, categoryId) {

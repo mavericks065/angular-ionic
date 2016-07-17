@@ -53,6 +53,7 @@
         })
         .state('tab.categories', {
           url: '/categories/:masterPassword',
+          cache: false,
           resolve: {
             masterPassword: function($stateParams) {
               return $stateParams.masterPassword;
