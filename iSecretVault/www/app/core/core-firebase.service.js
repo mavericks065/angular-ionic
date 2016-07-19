@@ -19,6 +19,7 @@
     var self = this;
 
     self.getFirebaseAuth = getFirebaseAuth;
+    self.getAuth = getAuth;
     self.getAuthentication = getAuthentication;
     self.synchronize = synchronize;
     self.setValue = setValue;
@@ -49,6 +50,12 @@
 
     function getFirebaseAuth() {
       return $firebaseAuth();
+    }
+
+    function getAuth() {
+      /*jshint -W117 */
+      return firebase.auth();
+      /*jshint +W117 */
     }
 
     function getAuthentication() {

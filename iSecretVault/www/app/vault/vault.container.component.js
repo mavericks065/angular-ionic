@@ -44,19 +44,15 @@
     // internal functions
 
     function init() {
-
-      vm.VaultConstants = VaultConstants;
-      vm.fbAuth = FirebaseService.getAuthentication();
-
-      if (vm.fbAuth) {
-        vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
-        // only way to  make the binding working :
-        // http://stackoverflow.com/questions/29426985/angularfire-3-way-binding-without-scope
-        vm.syncObject = FirebaseService.synchronize(vm.userReference);
-        vm.syncObject.$bindTo($scope, 'fireBaseData');
-      } else {
-        $state.go('authentication');
-      }
+      FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.VaultConstants = VaultConstants;
+          vm.userUid = user.uid;
+          vm.userReference = FirebaseService.getUserReference(vm.userUid);
+        } else {
+          $state.go('authentication');
+        }
+      });
     }
   }
 })();

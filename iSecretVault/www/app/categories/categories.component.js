@@ -22,7 +22,7 @@
     return component;
   }
 
-  function CategoriesController($scope, $state, $ionicPopup, FirebaseService,
+  function CategoriesController($scope, $q, $state, $ionicPopup, FirebaseService,
     CategoriesService) {
 
     var vm = this;
@@ -32,38 +32,16 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getAuthentication();
+      FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.userUid = user.uid;
+          vm.userReference = FirebaseService.getUserReference(vm.userUid);
+          vm.categoriesReference = FirebaseService.getCategoriesReference(vm.userUid);
 
-      if (vm.fbAuth) {
-        vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
-        vm.categoriesReference = FirebaseService.getCategoriesReference(vm.fbAuth.uid);
-
-        vm.add = add;
-      } else {
-        $state.go('authentication');
-      }
-      findAndSortCategories();
-    }
-
-    function add() {
-      $ionicPopup.prompt({
-        title: 'Enter a new category',
-        inputType: 'text'
-      }).then(function(result) {
-        if (result) {
-          var newCategoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
-            result.toSHA1());
-
-          FirebaseService.isReferenceExisting(newCategoryReference)
-            .then(function(isReferenceExisting) {
-              if (!isReferenceExisting) {
-                CategoriesService.insertCategory(vm.categoriesReference, result);
-              }
-            }).then(function() {
-              findAndSortCategories();
-            });
+          vm.add = add;
+          findAndSortCategories();
         } else {
-          console.log('Action not completed');
+          $state.go('authentication');
         }
       });
     }
@@ -71,10 +49,11 @@
     function findAndSortCategories() {
       vm.categories = [];
 
+      // https://firebase.google.com/docs/database/web/retrieve-data
       vm.categoriesReference.on('value', function(dataSnapshot) {
         var savedCategories = dataSnapshot.val();
         for (var key in savedCategories) {
-          if (savedCategories.hasOwnProperty(key)) {
+          if (savedCategories.hasOwnProperty(key) && savedCategories[key].category) {
             vm.categories.push({
               id: key,
               category: savedCategories[key].category
@@ -88,6 +67,29 @@
     function sortCategories() {
       vm.categories = _.sortBy(vm.categories, function(category) {
         return category.category;
+      });
+    }
+
+    function add() {
+      $ionicPopup.prompt({
+        title: 'Enter a new category',
+        inputType: 'text'
+      }).then(function(result) {
+        if (result) {
+          var newCategoryReference = FirebaseService.getCategoryReference(vm.userUid,
+            result.toSHA1());
+
+          FirebaseService.isReferenceExisting(newCategoryReference)
+            .then(function(isReferenceExisting) {
+              if (!isReferenceExisting) {
+                CategoriesService.insertCategory(vm.categoriesReference, result);
+              }
+            }).then(function() {
+              findAndSortCategories();
+            });
+        } else {
+          console.log('Action not completed');
+        }
       });
     }
   }

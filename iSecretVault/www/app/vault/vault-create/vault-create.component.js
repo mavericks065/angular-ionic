@@ -15,8 +15,7 @@
     var component = {
       templateUrl: 'app/vault/vault-create/vault-create.view.html',
       bindings: {
-        userReference: '<',
-        syncObject: '='
+        userReference: '<'
       },
       controller: VaultCreateController
     };
@@ -39,12 +38,14 @@
     // internal functions
 
     function create(masterPassword) {
-      vm.syncObject.$loaded().then(function() {
-        setUserData(masterPassword);
-        $state.go('locked');
-      });
+      setUserData(masterPassword);
+      $state.go('locked');
     }
 
+    /**
+    * Insert a new master password
+    * Insert Categories object to not have to do it later
+    */
     function setUserData(masterPassword) {
       FirebaseService.setValue(vm.userReference, 'masterPassword',
         $cipherFactory.encrypt('Authenticated', masterPassword));
