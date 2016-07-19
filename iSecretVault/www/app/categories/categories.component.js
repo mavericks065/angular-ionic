@@ -22,7 +22,7 @@
     return component;
   }
 
-  function CategoriesController($scope, $q, $state, $ionicPopup, FirebaseService,
+  function CategoriesController($scope, $state, $ionicPopup, FirebaseService,
     CategoriesService) {
 
     var vm = this;
@@ -32,7 +32,7 @@
     // internal functions
 
     function init() {
-      FirebaseService.getAuth().onAuthStateChanged(function(user) {
+      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.userUid = user.uid;
           vm.userReference = FirebaseService.getUserReference(vm.userUid);
@@ -44,24 +44,28 @@
           $state.go('authentication');
         }
       });
+      unregister();
     }
 
     function findAndSortCategories() {
-      vm.categories = [];
-
       // https://firebase.google.com/docs/database/web/retrieve-data
       vm.categoriesReference.on('value', function(dataSnapshot) {
+        vm.categories = [];
         var savedCategories = dataSnapshot.val();
-        for (var key in savedCategories) {
-          if (savedCategories.hasOwnProperty(key) && savedCategories[key].category) {
-            vm.categories.push({
-              id: key,
-              category: savedCategories[key].category
-            });
-          }
-        }
+        copyCategories(savedCategories);
         sortCategories();
       });
+    }
+
+    function copyCategories(savedCategories) {
+      for (var key in savedCategories) {
+        if (savedCategories.hasOwnProperty(key) && savedCategories[key].category) {
+          vm.categories.push({
+            id: key,
+            category: savedCategories[key].category
+          });
+        }
+      }
     }
 
     function sortCategories() {
