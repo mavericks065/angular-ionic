@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item auto-list-divider
                 auto-list-divider-value="{{ item.category }}"
-                ng-repeat="item in $ctrl.categories"
+                ng-repeat="item in $ctrl.categories track by item.id"
                 ui-sref="passwords({categoryId: item.id, masterPassword: $ctrl.masterPassword})">
         {{ item.category }}
       </ion-item>

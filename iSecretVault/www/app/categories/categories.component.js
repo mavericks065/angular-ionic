@@ -88,8 +88,6 @@
               if (!isReferenceExisting) {
                 CategoriesService.insertCategory(vm.categoriesReference, result);
               }
-            }).then(function() {
-              findAndSortCategories();
             });
         } else {
           console.log('Action not completed');
