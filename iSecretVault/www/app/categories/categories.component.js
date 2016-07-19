@@ -32,13 +32,11 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
+      vm.fbAuth = FirebaseService.getAuthentication();
 
       if (vm.fbAuth) {
         vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
         vm.categoriesReference = FirebaseService.getCategoriesReference(vm.fbAuth.uid);
-        vm.syncObject = FirebaseService.synchronize(vm.userReference);
-        vm.syncObject.$bindTo($scope, 'fireBaseData');
 
         vm.add = add;
       } else {
@@ -53,29 +51,36 @@
         inputType: 'text'
       }).then(function(result) {
         if (result) {
-          if (!$scope.fireBaseData.categories[result.toSHA1()]) {
-            CategoriesService.insertCategory(vm.categoriesReference, result);
-          }
+          var newCategoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
+            result.toSHA1());
+
+          FirebaseService.isReferenceExisting(newCategoryReference)
+            .then(function(isReferenceExisting) {
+              if (!isReferenceExisting) {
+                CategoriesService.insertCategory(vm.categoriesReference, result);
+              }
+            }).then(function() {
+              findAndSortCategories();
+            });
         } else {
           console.log('Action not completed');
         }
-      }).then(function() {
-        findAndSortCategories();
       });
     }
 
     function findAndSortCategories() {
       vm.categories = [];
-      vm.syncObject.$loaded().then(function() {
-        for (var key in $scope.fireBaseData.categories) {
-          if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
+
+      vm.categoriesReference.on('value', function(dataSnapshot) {
+        var savedCategories = dataSnapshot.val();
+        for (var key in savedCategories) {
+          if (savedCategories.hasOwnProperty(key)) {
             vm.categories.push({
               id: key,
-              category: $scope.fireBaseData.categories[key].category
+              category: savedCategories[key].category
             });
           }
         }
-      }).then(function() {
         sortCategories();
       });
     }

@@ -35,7 +35,7 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
+      vm.fbAuth = FirebaseService.getAuthentication();
       if (vm.fbAuth) {
         bindReferences();
 

@@ -12,19 +12,26 @@
     init();
 
     /*jshint -W117 */
-    var fb = firebase.database().ref();
+    var firebaseDatabase = firebase.database();
     /*jshint +W117 */
 
+    var fb = firebaseDatabase.ref();
     var self = this;
-    self.getFirebaseRef = getFirebaseRef;
+
     self.getFirebaseAuth = getFirebaseAuth;
-    self.getUserReference = getUserReference;
-    self.getCategoryReference = getCategoryReference;
-    self.getCategoriesReference = getCategoriesReference;
-    self.getPasswordsReference = getPasswordsReference;
-    self.getPasswordReference = getPasswordReference;
+    self.getAuthentication = getAuthentication;
     self.synchronize = synchronize;
     self.setValue = setValue;
+    self.isReferenceExisting = isReferenceExisting;
+
+    // User data
+    self.getUserReference = getUserReference;
+    // Category data
+    self.getCategoryReference = getCategoryReference;
+    self.getCategoriesReference = getCategoriesReference;
+    // Password data
+    self.getPasswordsReference = getPasswordsReference;
+    self.getPasswordReference = getPasswordReference;
 
     // Internal functions
 
@@ -40,12 +47,21 @@
       /*jshint +W117 */
     }
 
-    function getFirebaseRef() {
-      return fb;
+    function getFirebaseAuth() {
+      return $firebaseAuth();
     }
 
-    function getFirebaseAuth() {
+    function getAuthentication() {
       return $firebaseAuth().$getAuth();
+    }
+
+    /* Doc :
+    https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot#exists
+    */
+    function isReferenceExisting(reference) {
+      return reference.once('value').then(function(snapshot) {
+        return snapshot.exists();
+      });
     }
 
     function getUserReference(uid) {
