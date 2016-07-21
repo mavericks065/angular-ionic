@@ -26,38 +26,37 @@
 
     var vm = this;
 
-    vm.list = list;
-    vm.back = back;
-
     vm.$onInit = init;
 
     // internal functions
 
     function init() {
-      vm.digitalFootprints = [];
 
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
+      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.userUid = user.uid;
+          vm.categoryReference = FirebaseService.getCategoryReference(vm.userUid,
+            vm.categoryId);
+          vm.digitalFootprints = [];
 
-      if (vm.fbAuth) {
-        vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
-          vm.categoryId);
-        vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
-
-        vm.syncObject.$bindTo($scope, 'firebaseData');
-      } else {
-        $state.go('authentication');
-      }
+          vm.back = back;
+          list();
+        } else {
+          $state.go('authentication');
+        }
+      });
+      unregister();
     }
 
     function list() {
-      vm.syncObject.$loaded().then(function() {
-        var encryptedPasswords = $scope.firebaseData.digitalFootprints;
-        for (var key in encryptedPasswords) {
-          if (encryptedPasswords.hasOwnProperty(key)) {
+      vm.categoryReference.on('value', function(dataSnapshot) {
+        var savedEncryptedDigitalFootprints = dataSnapshot.val().digitalFootprints;
+        for (var key in savedEncryptedDigitalFootprints) {
+          if (savedEncryptedDigitalFootprints.hasOwnProperty(key)) {
             vm.digitalFootprints.push({
               id: key,
-              digitalFootprint: JSON.parse($cipherFactory.decrypt(encryptedPasswords[key].cipherText,
-                vm.masterPassword, encryptedPasswords[key].salt, encryptedPasswords[key].iv))
+              digitalFootprint: JSON.parse($cipherFactory.decrypt(savedEncryptedDigitalFootprints[key].cipherText,
+                vm.masterPassword, savedEncryptedDigitalFootprints[key].salt, savedEncryptedDigitalFootprints[key].iv))
             });
           }
         }

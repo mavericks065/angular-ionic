@@ -15,8 +15,7 @@
     var component = {
       templateUrl: 'app/vault/vault-create/vault-create.view.html',
       bindings: {
-        userReference: '<',
-        syncObject: '='
+        userReference: '<'
       },
       controller: VaultCreateController
     };
@@ -35,34 +34,24 @@
     var vm = this;
 
     vm.create = create;
-    // vm.reset = reset;
 
     // internal functions
 
     function create(masterPassword) {
-      vm.syncObject.$loaded().then(function() {
-        // vm.userReference.child('masterPassword').set($cipherFactory.encrypt('Authenticated',
-        //                                               masterPassword),
-        //                                               function() {
-        //   // there is an error
-        //   $state.go('locked');
-        // });
-        var result = FirebaseService.setValue(vm.userReference, 'masterPassword',
-          $cipherFactory.encrypt('Authenticated', masterPassword));
-        if (result) {
-          $state.go('locked');
-        }
-      });
+      setUserData(masterPassword);
+      $state.go('locked');
     }
 
-    // function reset() {
-    //   vm.userReference.remove(function(error) {
-    //     if (error) {
-    //       console.error('ERROR: ' + error);
-    //     } else {
-    //       $state.go('createvault');
-    //     }
-    //   });
-    // }
+    /**
+    * Insert a new master password
+    * Insert Categories object to not have to do it later
+    */
+    function setUserData(masterPassword) {
+      FirebaseService.setValue(vm.userReference, 'masterPassword',
+        $cipherFactory.encrypt('Authenticated', masterPassword));
+      FirebaseService.setValue(vm.userReference, 'categories', {
+        description: 'List of categories of encrypted data.'
+      });
+    }
   }
 })();

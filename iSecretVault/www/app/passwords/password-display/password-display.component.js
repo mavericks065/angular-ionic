@@ -28,31 +28,32 @@
 
     var vm = this;
 
-    vm.view = view;
-    vm.editPassword = editPassword;
-    vm.back = back;
-
     vm.$onInit = init;
 
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
+      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.userUid = user.uid;
+          vm.categoryReference = FirebaseService.getCategoryReference(vm.userUid,
+            vm.categoryId);
 
-      if (vm.fbAuth) {
-        vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
-          vm.categoryId);
-        vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
+          vm.editPassword = editPassword;
+          vm.back = back;
 
-        vm.syncObject.$bindTo($scope, 'firebaseData');
-      } else {
-        $state.go('authentication');
-      }
+          view();
+        } else {
+          $state.go('authentication');
+        }
+      });
+      unregister();
     }
 
     function view() {
-      vm.syncObject.$loaded().then(function() {
-        var encryptedPassword = $scope.firebaseData.digitalFootprints[vm.passwordId];
+      vm.categoryReference.once('value').then(function(dataSnapshot) {
+        var savedEncryptedDigitalFootprints = dataSnapshot.val().digitalFootprints;
+        var encryptedPassword = savedEncryptedDigitalFootprints[vm.passwordId];
         vm.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
           vm.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
       });
@@ -62,8 +63,7 @@
       $state.go('editpassword', {
         masterPassword: vm.masterPassword,
         categoryId: vm.categoryId,
-        passwordId: vm.passwordId,
-        password: vm.digitalFootprint
+        passwordId: vm.passwordId
       });
     }
 

@@ -7,24 +7,68 @@
   ])
   .service('FirebaseService', FirebaseService);
 
-  function FirebaseService($injector, $firebaseObject) {
-    var CoreConstants = $injector.get('CoreConstants');
-    var fb = new Firebase(CoreConstants.FIREBASE.FIREBASE_URL);
+  function FirebaseService($firebaseObject, $firebaseAuth) {
 
+    init();
+
+    /*jshint -W117 */
+    var firebaseDatabase = firebase.database();
+    /*jshint +W117 */
+
+    var fb = firebaseDatabase.ref();
     var self = this;
+
     self.getFirebaseAuth = getFirebaseAuth;
-    self.getUserReference = getUserReference;
-    self.getCategoryReference = getCategoryReference;
-    self.getCategoriesReference = getCategoriesReference;
-    self.getPasswordsReference = getPasswordsReference;
-    self.getPasswordReference = getPasswordReference;
+    self.getAuth = getAuth;
+    self.getAuthentication = getAuthentication;
     self.synchronize = synchronize;
     self.setValue = setValue;
+    self.isReferenceExisting = isReferenceExisting;
+
+    // User data
+    self.getUserReference = getUserReference;
+    // Category data
+    self.getCategoryReference = getCategoryReference;
+    self.getCategoriesReference = getCategoriesReference;
+    // Password data
+    self.getPasswordsReference = getPasswordsReference;
+    self.getPasswordReference = getPasswordReference;
 
     // Internal functions
 
+    function init() {
+      var config = {
+        apiKey: 'AIzaSyB0jTIOB88EkrMJhljCi09qhfSciPJneQc',
+        authDomain: 'ipasswordmanager.firebaseapp.com',
+        databaseURL: 'https://ipasswordmanager.firebaseio.com',
+        storageBucket: 'project-8977371397179982709.appspot.com'
+      };
+      /*jshint -W117 */
+      firebase.initializeApp(config);
+      /*jshint +W117 */
+    }
+
     function getFirebaseAuth() {
-      return fb.getAuth();
+      return $firebaseAuth();
+    }
+
+    function getAuth() {
+      /*jshint -W117 */
+      return firebase.auth();
+      /*jshint +W117 */
+    }
+
+    function getAuthentication() {
+      return $firebaseAuth().$getAuth();
+    }
+
+    /* Doc :
+    https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot#exists
+    */
+    function isReferenceExisting(reference) {
+      return reference.once('value').then(function(snapshot) {
+        return snapshot.exists();
+      });
     }
 
     function getUserReference(uid) {
@@ -54,9 +98,7 @@
     }
 
     function setValue(reference, node, value) {
-      var result = reference.child(node).set(value, function() {
-        return 'onComplete';
-      });
+      var result = reference.child(node).set(value);
       return result;
     }
   }

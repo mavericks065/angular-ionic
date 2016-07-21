@@ -30,60 +30,59 @@
 
     var vm = this;
 
-    vm.save = save;
-    vm.remove = remove;
-    vm.back = back;
-
     vm.$onInit = init;
 
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
-      if (vm.fbAuth) {
-        bindReferences();
 
-        vm.syncObject = FirebaseService.synchronize(vm.categoryReference);
-        vm.syncObject.$bindTo($scope, 'firebaseData');
-      } else {
-        $state.go('authentication');
-      }
+      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          bindReferences(user);
 
-      if (vm.passwordId) {
-        findDigitalFootPrint();
-      }
+          vm.save = save;
+          vm.remove = remove;
+          vm.back = back;
+
+          if (vm.passwordId) {
+            findDigitalFootPrint();
+          }
+        } else {
+          $state.go('authentication');
+        }
+      });
+      unregister();
     }
 
-    function bindReferences() {
-      vm.categoryReference = FirebaseService.getCategoryReference(vm.fbAuth.uid,
+    function bindReferences(user) {
+      vm.userUid = user.uid;
+      vm.categoryReference = FirebaseService.getCategoryReference(vm.userUid,
         vm.categoryId);
 
-      vm.passwordsReference = FirebaseService.getPasswordsReference(vm.fbAuth.uid,
+      vm.passwordsReference = FirebaseService.getPasswordsReference(vm.userUid,
         vm.categoryId);
-      vm.passwordReference = FirebaseService.getPasswordReference(vm.fbAuth.uid,
+      vm.passwordReference = FirebaseService.getPasswordReference(vm.userUid,
         vm.categoryId, vm.passwordId);
     }
 
     function findDigitalFootPrint() {
-      vm.syncObject.$loaded().then(function() {
-        var encryptedPassword = $scope.firebaseData.digitalFootprints[vm.passwordId];
+      vm.categoryReference.once('value').then(function(dataSnapshot) {
+        var savedEncryptedDigitalFootprints = dataSnapshot.val().digitalFootprints;
+        var encryptedPassword = savedEncryptedDigitalFootprints[vm.passwordId];
         vm.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
           vm.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
       });
     }
 
     function save() {
-      vm.syncObject.$loaded().then(function() {
+      var isUpdate = vm.passwordId ? true : false;
+      var firebaseReference = isUpdate ? vm.passwordReference : vm.passwordsReference;
 
-        var isUpdate = vm.passwordId ? true : false;
-        var firebaseReference = isUpdate ? vm.passwordReference : vm.passwordsReference;
-
-        PasswordsService.savePassword(firebaseReference, vm.digitalFootprint,
-          vm.masterPassword, isUpdate).then(function() {
-          $state.go('passwords', {
-            categoryId: vm.categoryId,
-            masterPassword: vm.masterPassword
-          });
+      PasswordsService.savePassword(firebaseReference, vm.digitalFootprint,
+        vm.masterPassword, isUpdate).then(function() {
+        $state.go('passwords', {
+          categoryId: vm.categoryId,
+          masterPassword: vm.masterPassword
         });
       });
     }

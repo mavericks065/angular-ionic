@@ -32,19 +32,46 @@
     // internal functions
 
     function init() {
-      vm.fbAuth = FirebaseService.getFirebaseAuth();
+      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.userUid = user.uid;
+          vm.userReference = FirebaseService.getUserReference(vm.userUid);
+          vm.categoriesReference = FirebaseService.getCategoriesReference(vm.userUid);
 
-      if (vm.fbAuth) {
-        vm.userReference = FirebaseService.getUserReference(vm.fbAuth.uid);
-        vm.categoriesReference = FirebaseService.getCategoriesReference(vm.fbAuth.uid);
-        vm.syncObject = FirebaseService.synchronize(vm.userReference);
-        vm.syncObject.$bindTo($scope, 'fireBaseData');
+          vm.add = add;
+          findAndSortCategories();
+        } else {
+          $state.go('authentication');
+        }
+      });
+      unregister();
+    }
 
-        vm.add = add;
-      } else {
-        $state.go('authentication');
+    function findAndSortCategories() {
+      // https://firebase.google.com/docs/database/web/retrieve-data
+      vm.categoriesReference.on('value', function(dataSnapshot) {
+        vm.categories = [];
+        var savedCategories = dataSnapshot.val();
+        copyCategories(savedCategories);
+        sortCategories();
+      });
+    }
+
+    function copyCategories(savedCategories) {
+      for (var key in savedCategories) {
+        if (savedCategories.hasOwnProperty(key) && savedCategories[key].category) {
+          vm.categories.push({
+            id: key,
+            category: savedCategories[key].category
+          });
+        }
       }
-      findAndSortCategories();
+    }
+
+    function sortCategories() {
+      vm.categories = _.sortBy(vm.categories, function(category) {
+        return category.category;
+      });
     }
 
     function add() {
@@ -53,39 +80,18 @@
         inputType: 'text'
       }).then(function(result) {
         if (result) {
-          if (!$scope.fireBaseData.categories) {
-            $scope.fireBaseData.categories = {};
-          }
-          if (!$scope.fireBaseData.categories[result.toSHA1()]) {
-            CategoriesService.insertCategory(vm.categoriesReference, result);
-          }
+          var newCategoryReference = FirebaseService.getCategoryReference(vm.userUid,
+            result.toSHA1());
+
+          FirebaseService.isReferenceExisting(newCategoryReference)
+            .then(function(isReferenceExisting) {
+              if (!isReferenceExisting) {
+                CategoriesService.insertCategory(vm.categoriesReference, result);
+              }
+            });
         } else {
           console.log('Action not completed');
         }
-      }).then(function() {
-        findAndSortCategories();
-      });
-    }
-
-    function findAndSortCategories() {
-      vm.categories = [];
-      vm.syncObject.$loaded().then(function() {
-        for (var key in $scope.fireBaseData.categories) {
-          if ($scope.fireBaseData.categories.hasOwnProperty(key)) {
-            vm.categories.push({
-              id: key,
-              category: $scope.fireBaseData.categories[key].category
-            });
-          }
-        }
-      }).then(function() {
-        sortCategories();
-      });
-    }
-
-    function sortCategories() {
-      vm.categories = _.sortBy(vm.categories, function(category) {
-        return category.category;
       });
     }
   }
