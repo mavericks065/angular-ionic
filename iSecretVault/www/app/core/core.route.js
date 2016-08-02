@@ -58,7 +58,7 @@
           }
         })
         .state('tab.categories', {
-          url: '/categories/:masterPassword',
+          url: '/masterPassword/:masterPassword/categories',
           cache: false,
           resolve: {
             masterPassword: function($stateParams) {
@@ -77,7 +77,7 @@
           }
         })
         .state('tab.parameters', {
-          url: '/parameters/:masterPassword',
+          url: '/masterPassword/:masterPassword/parameters',
           views: {
             'tab-parameters': {
               templateUrl: 'app/parameters/parameters.view.html',
@@ -86,7 +86,7 @@
           }
         })
         .state('passwords', {
-          url: '/passwords/:categoryId/:masterPassword',
+          url: '/masterPassword/:masterPassword/categories/:categoryId/passwords',
           cache: false,
           resolve: {
             masterPassword: function($stateParams) {
@@ -111,7 +111,8 @@
           }
         })
         .state('newpassword', {
-          url: '/newpassword/:categoryId/:masterPassword',
+          url: '/masterPassword/:masterPassword/categories/:categoryId/passwords',
+          //'/newpassword/:categoryId/:masterPassword',
           resolve: {
             masterPassword: function($stateParams) {
               return $stateParams.masterPassword;
@@ -137,7 +138,7 @@
           }
         })
         .state('editpassword', {
-          url: '/editpassword/:categoryId/:masterPassword/:passwordId',
+          url: '/masterPassword/:masterPassword/categories/:categoryId/passwords/:passwordId',
           resolve: {
             masterPassword: function($stateParams) {
               return $stateParams.masterPassword;
@@ -171,7 +172,7 @@
           }
         })
         .state('viewpassword', {
-          url: '/viewpassword/:categoryId/:masterPassword/:passwordId',
+          url: '/masterPassword/:masterPassword/categories/:categoryId/passwords/:passwordId',
           cache: false,
           resolve: {
             masterPassword: function($stateParams) {
