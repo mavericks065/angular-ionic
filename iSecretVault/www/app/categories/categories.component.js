@@ -49,17 +49,19 @@
 
     function findAndSortCategories() {
       // https://firebase.google.com/docs/database/web/retrieve-data
-      vm.categoriesReference.on('value', function(dataSnapshot) {
+      vm.userReference.on('value', function(dataSnapshot) {
         vm.categories = [];
-        var savedCategories = dataSnapshot.val();
+        var savedCategories = dataSnapshot.val().categories;
         copyCategories(savedCategories);
         sortCategories();
+        $scope.$apply();
       });
     }
 
     function copyCategories(savedCategories) {
       for (var key in savedCategories) {
-        if (savedCategories.hasOwnProperty(key) && savedCategories[key].category) {
+        if (savedCategories.hasOwnProperty(key) &&
+            savedCategories[key].category) {
           vm.categories.push({
             id: key,
             category: savedCategories[key].category
