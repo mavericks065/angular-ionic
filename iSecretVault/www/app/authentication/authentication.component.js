@@ -40,9 +40,9 @@
       }).catch(function(error) {
         console.error('Login Failed: ' + error);
         $ionicPopup.alert({
-           title: 'Login failed',
-           template: 'Log in is not possible, login or password are incorrect.'
-         });
+          title: 'Login failed',
+          template: 'Log in is not possible, login or password are incorrect.'
+        });
       });
     }
 
@@ -54,9 +54,9 @@
       }).catch(function(error) {
         console.error('Registration Failed: ' + error);
         $ionicPopup.alert({
-           title: 'Registration failed',
-           template: 'Please try again in a few minutes.'
-         });
+          title: 'Registration failed',
+          template: 'Please try again in a few minutes.'
+        });
       });
     }
   }
