@@ -32,6 +32,7 @@
     // internal functions
 
     function init() {
+      var stateShouldChange = false;
       var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.userUid = user.uid;
@@ -41,10 +42,13 @@
           vm.add = add;
           findAndSortCategories();
         } else {
+          stateShouldChange = true;
           $state.go('authentication');
         }
       });
-      unregister();
+      if (stateShouldChange) {
+        unregister();
+      }
     }
 
     function findAndSortCategories() {
