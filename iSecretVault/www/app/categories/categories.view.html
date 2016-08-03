@@ -6,13 +6,22 @@
     </button>
   </ion-header-bar>
   <ion-content overflow-scroll="true">
-    <ion-list ng-repeat="category in $ctrl.categories track by category.id">
+    <ion-list ng-repeat="category in $ctrl.categories track by category.id"
+              can-swipe="true">
+
       <div class="item item-divider"
            ng-if="$index === 0 || $ctrl.firstLetter(category.category) != $ctrl.firstLetter($ctrl.categories[$index-1].category)">
         {{ $ctrl.firstLetter(category.category) }}
       </div>
+
       <ion-item ui-sref="passwords({categoryId: category.id, masterPassword: $ctrl.masterPassword})">
         {{ category.category }}
+
+        <ion-option-button class="button-assertive"
+                         ng-click="$ctrl.deleteCategory(category)">
+          Delete
+        </ion-option-button>
+
       </ion-item>
     </ion-list>
   </ion-content>

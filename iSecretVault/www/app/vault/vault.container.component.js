@@ -38,25 +38,33 @@
     $ionicHistory.clearHistory();
 
     var vm = this;
+    var stateShouldChange = false;
+    var unregister;
 
     vm.$onInit = init;
+    vm.$onDestroy = destroy;
+
+    if (stateShouldChange) {
+      unregister();
+    }
 
     // internal functions
 
     function init() {
-      var stateShouldChange = false;
-      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+      unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.VaultConstants = VaultConstants;
           vm.userUid = user.uid;
           vm.userReference = FirebaseService.getUserReference(vm.userUid);
         } else {
+          stateShouldChange = true;
           $state.go('authentication');
         }
       });
-      if (stateShouldChange) {
-        unregister();
-      }
+    }
+
+    function destroy() {
+      unregister();
     }
   }
 })();
