@@ -69,8 +69,7 @@
         sortCategories();
         $timeout(function() {
           $scope.$apply();
-        })
-        // $scope.$apply();
+        });
       });
     }
 
