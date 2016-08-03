@@ -10,6 +10,7 @@
     var self = this;
 
     self.insertCategory = insertCategory;
+    self.removeCategory = removeCategory;
 
     // Internal functions
 
@@ -19,6 +20,10 @@
         'category': category,
         'digitalFootprints': {}
       });
+    }
+
+    function removeCategory(firebaseReference) {
+      firebaseReference.remove();
     }
   }
 })();

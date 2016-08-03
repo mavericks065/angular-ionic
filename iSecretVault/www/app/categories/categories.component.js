@@ -21,24 +21,31 @@
     return component;
   }
 
-  function CategoriesController($scope, $state, $ionicPopup, FirebaseService,
-    CategoriesService) {
+  function CategoriesController($scope, $state, $timeout, $ionicPopup,
+    FirebaseService, CategoriesService) {
 
     var vm = this;
+    var stateShouldChange = false;
+    var unregister;
 
     vm.$onInit = init;
+    vm.$onDestroy = destroy;
+
+    if (stateShouldChange) {
+      unregister();
+    }
 
     // internal functions
 
     function init() {
-      var stateShouldChange = false;
-      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+      unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.userUid = user.uid;
           vm.userReference = FirebaseService.getUserReference(vm.userUid);
           vm.categoriesReference = FirebaseService.getCategoriesReference(vm.userUid);
 
           vm.add = add;
+          vm.deleteCategory = deleteCategory;
           vm.firstLetter = firstLetter;
 
           findAndSortCategories();
@@ -47,9 +54,10 @@
           $state.go('authentication');
         }
       });
-      if (stateShouldChange) {
-        unregister();
-      }
+    }
+
+    function destroy() {
+      unregister();
     }
 
     function findAndSortCategories() {
@@ -59,7 +67,10 @@
         var savedCategories = dataSnapshot.val().categories;
         copyCategories(savedCategories);
         sortCategories();
-        $scope.$apply();
+        $timeout(function() {
+          $scope.$apply();
+        })
+        // $scope.$apply();
       });
     }
 
@@ -100,6 +111,12 @@
           console.log('Action not completed');
         }
       });
+    }
+
+    function deleteCategory(category) {
+
+      CategoriesService.removeCategory(FirebaseService.getCategoryReference(vm.userUid,
+        category.id));
     }
 
     function firstLetter(category) {

@@ -27,14 +27,20 @@
     FirebaseService) {
 
     var vm = this;
+    var unregister;
+    var stateShouldChange = false;
 
     vm.$onInit = init;
+    vm.$onDestroy = destroy;
+
+    if (stateShouldChange) {
+      unregister();
+    }
 
     // internal functions
 
     function init() {
-      var stateShouldChange = false;
-      var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+      unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.userUid = user.uid;
           vm.categoryReference = FirebaseService.getCategoryReference(vm.userUid,
@@ -45,12 +51,14 @@
 
           view();
         } else {
+          stateShouldChange = true;
           $state.go('authentication');
         }
       });
-      if (stateShouldChange) {
-        unregister();
-      }
+    }
+
+    function destroy() {
+      unregister();
     }
 
     function view() {

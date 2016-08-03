@@ -44,19 +44,20 @@
     // internal functions
 
     function init() {
-      var stateShouldChange = false;
+      // var stateShouldChange = false;
       var unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.VaultConstants = VaultConstants;
           vm.userUid = user.uid;
           vm.userReference = FirebaseService.getUserReference(vm.userUid);
         } else {
+          // stateShouldChange = true;
           $state.go('authentication');
         }
       });
-      if (stateShouldChange) {
-        unregister();
-      }
+      // if (stateShouldChange) {
+      unregister();
+      // }
     }
   }
 })();
