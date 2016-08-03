@@ -6,8 +6,7 @@
       'ionic',
       'firebase',
       'ipmApp.core.firebase.service',
-      'ipmApp.categories.service',
-      'ionic.ion.autoListDivider'
+      'ipmApp.categories.service'
     ])
     .component('categories', categories());
 
@@ -40,6 +39,8 @@
           vm.categoriesReference = FirebaseService.getCategoriesReference(vm.userUid);
 
           vm.add = add;
+          vm.firstLetter = firstLetter;
+
           findAndSortCategories();
         } else {
           stateShouldChange = true;
@@ -76,7 +77,7 @@
 
     function sortCategories() {
       vm.categories = _.sortBy(vm.categories, function(category) {
-        return category.category;
+        return category.category.toLowerCase();
       });
     }
 
@@ -99,6 +100,10 @@
           console.log('Action not completed');
         }
       });
+    }
+
+    function firstLetter(category) {
+      return category.toUpperCase() && category.charAt(0).toUpperCase();
     }
   }
 })();
