@@ -2,6 +2,6 @@
   'use strict';
 
   angular.module('ipmApp.parameters', [
-    'ipmApp.parameters.controller'
+    'ipmApp.parameters.component'
   ]);
 })();

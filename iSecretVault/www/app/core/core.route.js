@@ -6,6 +6,7 @@
       'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
+      'ipmApp.parameters',
       'ipmApp.passwords',
       'ipmApp.core.firebase.service'
     ])
@@ -81,10 +82,20 @@
       })
       .state('tab.parameters', {
         url: '/masterPassword/:masterPassword/parameters',
+        cache: false,
+        resolve: {
+          masterPassword: function($stateParams) {
+            return $stateParams.masterPassword;
+          }
+        },
         views: {
           'tab-parameters': {
-            templateUrl: 'app/parameters/parameters.view.html',
-            controller: 'ParameterController as parameterCtrl'
+            template: '<parameters master-password="parametersCtrl.masterPassword"></parameters>',
+            controller: function(masterPassword) {
+              var vm = this;
+              vm.masterPassword = masterPassword;
+            },
+            controllerAs: 'parametersCtrl'
           }
         }
       })
