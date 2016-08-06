@@ -2,24 +2,24 @@
   'use strict';
 
   angular
-    .module('ipmApp.parameters.component', [
+    .module('ipmApp.settings.component', [
       'ionic',
       'ipmApp.authentication.service'
     ])
-    .component('parameters', parameters());
+    .component('settings', settings());
 
-  function parameters() {
+  function settings() {
     var component = {
-      templateUrl: 'app/parameters/parameters.view.html',
+      templateUrl: 'app/settings/settings.view.html',
       bindings: {
         masterPassword: '<'
       },
-      controller: ParametersController
+      controller: SettingsController
     };
     return component;
   }
 
-  function ParametersController($state, AuthenticationService) {
+  function SettingsController($state, AuthenticationService) {
     var vm = this;
 
     vm.signOut = signOut;

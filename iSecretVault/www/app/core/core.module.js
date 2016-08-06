@@ -8,6 +8,7 @@
     'ipmApp.authentication',
     'ipmApp.vault',
     'ipmApp.categories',
+    'ipmApp.settings',
     'ipmApp.passwords',
     'ipmApp.cipher.service'
   ]);
