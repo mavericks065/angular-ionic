@@ -3,7 +3,8 @@
 
   angular
     .module('ipmApp.parameters.component', [
-      'ionic'
+      'ionic',
+      'ipmApp.authentication.service'
     ])
     .component('parameters', parameters());
 
@@ -18,6 +19,16 @@
     return component;
   }
 
-  function ParametersController() {
+  function ParametersController($state, AuthenticationService) {
+    var vm = this;
+
+    vm.signOut = signOut;
+
+    // internal functions
+
+    function signOut() {
+      AuthenticationService.signOut();
+      $state.go('authentication');
+    }
   }
 })();
