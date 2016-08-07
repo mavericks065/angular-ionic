@@ -19,12 +19,29 @@
     return component;
   }
 
-  function SettingsController($state, AuthenticationService) {
+  function SettingsController($state, AuthenticationService, FirebaseService) {
     var vm = this;
+    var unregister;
 
-    vm.signOut = signOut;
+    vm.$onInit = init;
+    vm.$onDestroy = destroy;
 
     // internal functions
+
+    function init() {
+      unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
+        if (user) {
+          vm.userId = user.uid;
+          vm.signOut = signOut;
+        } else {
+          $state.go('authentication');
+        }
+      });
+    }
+
+    function destroy() {
+      unregister();
+    }
 
     function signOut() {
       AuthenticationService.signOut();

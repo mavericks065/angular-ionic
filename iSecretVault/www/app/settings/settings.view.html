@@ -5,17 +5,17 @@
 
   <ion-content padding="true" class="has-header">
     <div>
-      <div class="list">
+      <ion-list>
         <div class="item item-divider">
           Accessibility
         </div>
-        <a class="item">
+        <ion-item ui-sref="settingsLoginPwd({userId: $ctrl.userId})">
           Reinitialise login password
-        </a>
-        <a class="item">
+        </ion-item>
+        <ion-item>
           Reinitialise master password
-        </a>
-      </div>
+        </ion-item>
+      </ion-list>
 
       <button class="button button-block button-assertive"
               ng-click="$ctrl.signOut()" >

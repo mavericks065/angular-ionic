@@ -23,11 +23,6 @@
           }
         }
       })
-      .state('tab', {
-        url: '/tab',
-        abstract: true,
-        templateUrl: 'app/core/core.view.html'
-      })
       .state('locked', {
         url: '/locked',
         cache: false,
@@ -61,6 +56,11 @@
           }
         }
       })
+      .state('tab', {
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'app/core/core.view.html'
+      })
       .state('tab.categories', {
         url: '/masterPassword/:masterPassword/categories',
         cache: false,
@@ -81,21 +81,33 @@
         }
       })
       .state('tab.settings', {
-        url: '/masterPassword/:masterPassword/settings',
+        url: '/settings',
+        cache: false,
+        views: {
+          'tab-settings': {
+            template: '<settings></settings>'
+          }
+        }
+      })
+      .state('settingsLoginPwd', {
+        url: '/settings/:userId/loginPassword',
         cache: false,
         resolve: {
-          masterPassword: function($stateParams) {
-            return $stateParams.masterPassword;
+          userId: function($stateParams) {
+            return $stateParams.userId;
           }
         },
         views: {
-          'tab-settings': {
-            template: '<settings master-password="settingsCtrl.masterPassword"></settings>',
-            controller: function(masterPassword) {
+          '': {
+            template: [
+              '<settings-login-password',
+              'user-id="settingsLoginPwdCtrl.userId"></settings-login-password>'
+            ].join(' '),
+            controller: function(userId) {
               var vm = this;
-              vm.masterPassword = masterPassword;
+              vm.userId = userId;
             },
-            controllerAs: 'settingsCtrl'
+            controllerAs: 'settingsLoginPwdCtrl'
           }
         }
       })
