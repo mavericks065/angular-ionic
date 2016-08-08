@@ -7,7 +7,8 @@
       'firebase',
       'ipmApp.cipher.service',
       'ipmApp.core.firebase.service',
-      'ipmApp.core.constants'
+      'ipmApp.core.constants',
+      'ipmApp.vault.service'
     ])
     .component('vaultUnlock', vaultUnlock());
 
@@ -22,7 +23,8 @@
     return component;
   }
 
-  function VaultUnlockController($scope, $state, $ionicHistory, $cipherFactory) {
+  function VaultUnlockController($scope, $state, $ionicHistory, $cipherFactory,
+    VaultService) {
 
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
@@ -43,6 +45,7 @@
           masterPassword, userData.masterPassword.salt, userData.masterPassword.iv,
           {output: 'hex'});
         if (decipherPhrase === 'Authenticated'.toHex()) {
+          VaultService.storeMasterPassword(masterPassword);
           $state.go('tab.categories', {masterPassword: masterPassword});
         }
       });
