@@ -62,21 +62,11 @@
         templateUrl: 'app/core/core.view.html'
       })
       .state('tab.categories', {
-        url: '/masterPassword/:masterPassword/categories',
+        url: '/categories',
         cache: false,
-        resolve: {
-          masterPassword: function($stateParams) {
-            return $stateParams.masterPassword;
-          }
-        },
         views: {
           'tab-categories': {
-            template: '<categories master-password="categoryCtrl.masterPassword"></categories>',
-            controller: function(masterPassword) {
-              var vm = this;
-              vm.masterPassword = masterPassword;
-            },
-            controllerAs: 'categoryCtrl'
+            template: '<categories></categories>'
           }
         }
       })
@@ -134,12 +124,9 @@
         }
       })
       .state('passwords', {
-        url: '/masterPassword/:masterPassword/categories/:categoryId/passwords',
+        url: '/categories/:categoryId/passwords',
         cache: false,
         resolve: {
-          masterPassword: function($stateParams) {
-            return $stateParams.masterPassword;
-          },
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
           }
@@ -147,11 +134,11 @@
         views: {
           '': {
             template: [
-              '<password-list master-password="pwdListCtrl.masterPassword"',
-              'category-id="pwdListCtrl.categoryId"></password-list>'].join(' '),
-            controller: function(masterPassword, categoryId) {
+              '<password-list ',
+              'category-id="pwdListCtrl.categoryId"',
+              '></password-list>'].join(''),
+            controller: function(categoryId) {
               var vm = this;
-              vm.masterPassword = masterPassword;
               vm.categoryId = categoryId;
             },
             controllerAs: 'pwdListCtrl'
@@ -159,12 +146,8 @@
         }
       })
       .state('newpassword', {
-        url: '/masterPassword/:masterPassword/categories/:categoryId/passwords',
-        //'/newpassword/:categoryId/:masterPassword',
+        url: '/categories/:categoryId/passwords',
         resolve: {
-          masterPassword: function($stateParams) {
-            return $stateParams.masterPassword;
-          },
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
           }
@@ -172,12 +155,10 @@
         views: {
           '': {
             template: [
-              '<password-form master-password="createPwdCtrl.masterPassword"',
-              'category-id="createPwdCtrl.categoryId"',
+              '<password-form category-id="createPwdCtrl.categoryId"',
               'mode="editPwdCtrl.mode"></password-form>'].join(' '),
-            controller: function(PasswordsConstants, masterPassword, categoryId) {
+            controller: function(PasswordsConstants, categoryId) {
               var vm = this;
-              vm.masterPassword = masterPassword;
               vm.categoryId = categoryId;
               vm.mode = PasswordsConstants.MODE.CREATE;
             },
@@ -186,11 +167,8 @@
         }
       })
       .state('editpassword', {
-        url: '/masterPassword/:masterPassword/categories/:categoryId/passwords/:passwordId',
+        url: '/categories/:categoryId/passwords/:passwordId',
         resolve: {
-          masterPassword: function($stateParams) {
-            return $stateParams.masterPassword;
-          },
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
           },
@@ -201,16 +179,14 @@
         views: {
           '': {
             template:  [
-              '<password-form master-password="editPwdCtrl.masterPassword"',
-              'category-id="editPwdCtrl.categoryId"',
+              '<password-form category-id="editPwdCtrl.categoryId"',
               'password-id="editPwdCtrl.passwordId"',
               'mode="editPwdCtrl.mode">',
               '</password-form>'].join(' '),
             controller: function($scope, $state, FirebaseService, $cipherFactory,
-              PasswordsConstants, masterPassword, categoryId, passwordId) {
+              PasswordsConstants, categoryId, passwordId) {
 
               var vm = this;
-              vm.masterPassword = masterPassword;
               vm.categoryId = categoryId;
               vm.passwordId = passwordId;
               vm.mode = PasswordsConstants.MODE.UPDATE;
@@ -220,12 +196,9 @@
         }
       })
       .state('viewpassword', {
-        url: '/masterPassword/:masterPassword/categories/:categoryId/passwords/:passwordId',
+        url: '/categories/:categoryId/passwords/:passwordId',
         cache: false,
         resolve: {
-          masterPassword: function($stateParams) {
-            return $stateParams.masterPassword;
-          },
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
           },
@@ -236,12 +209,11 @@
         views: {
           '': {
             template:  [
-              '<password-display master-password="viewPwdCtrl.masterPassword"',
-              'category-id="viewPwdCtrl.categoryId" password-id="viewPwdCtrl.passwordId">',
+              '<password-display category-id="viewPwdCtrl.categoryId"',
+              'password-id="viewPwdCtrl.passwordId">',
               '</password-display>'].join(' '),
-            controller: function(masterPassword, categoryId, passwordId) {
+            controller: function(categoryId, passwordId) {
               var vm = this;
-              vm.masterPassword = masterPassword;
               vm.categoryId = categoryId;
               vm.passwordId = passwordId;
             },

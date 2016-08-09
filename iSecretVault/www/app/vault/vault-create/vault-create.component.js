@@ -37,8 +37,8 @@
 
     // internal functions
 
-    function create(masterPassword) {
-      setUserData(masterPassword);
+    function create(masterCode) {
+      setUserData(masterCode);
       $state.go('locked');
     }
 
@@ -46,9 +46,9 @@
     * Insert a new master password
     * Insert Categories object to not have to do it later
     */
-    function setUserData(masterPassword) {
+    function setUserData(masterCode) {
       FirebaseService.setValue(vm.userReference, 'masterPassword',
-        $cipherFactory.encrypt('Authenticated', masterPassword));
+        $cipherFactory.encrypt('Authenticated', masterCode));
       FirebaseService.setValue(vm.userReference, 'categories', {
         description: 'List of categories of encrypted data.'
       });

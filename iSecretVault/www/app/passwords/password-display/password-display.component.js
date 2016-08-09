@@ -6,7 +6,8 @@
       'ionic',
       'firebase',
       'ipmApp.core.constants',
-      'ipmApp.core.firebase.service'
+      'ipmApp.core.firebase.service',
+      'ipmApp.vault.service'
     ])
     .component('passwordDisplay', passwordDisplay());
 
@@ -14,7 +15,6 @@
     var component = {
       templateUrl: 'app/passwords/password-display/password-display.view.html',
       bindings: {
-        masterPassword: '<',
         categoryId: '<',
         passwordId: '<'
       },
@@ -24,7 +24,7 @@
   }
 
   function PasswordDisplayController($scope, $state, $cipherFactory, $ionicHistory,
-    FirebaseService) {
+    FirebaseService, VaultService) {
 
     var vm = this;
     var unregister;
@@ -45,6 +45,7 @@
           vm.userUid = user.uid;
           vm.categoryReference = FirebaseService.getCategoryReference(vm.userUid,
             vm.categoryId);
+          vm.masterCode = VaultService.getMasterCode();
 
           vm.editPassword = editPassword;
           vm.back = back;
@@ -66,13 +67,12 @@
         var savedEncryptedDigitalFootprints = dataSnapshot.val().digitalFootprints;
         var encryptedPassword = savedEncryptedDigitalFootprints[vm.passwordId];
         vm.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
-          vm.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
+          vm.masterCode, encryptedPassword.salt, encryptedPassword.iv));
       });
     }
 
     function editPassword() {
       $state.go('editpassword', {
-        masterPassword: vm.masterPassword,
         categoryId: vm.categoryId,
         passwordId: vm.passwordId
       });

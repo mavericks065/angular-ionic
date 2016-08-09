@@ -18,9 +18,9 @@
       return firebaseReference.remove();
     }
 
-    function savePassword(firebaseReference, password, masterPassword, isUpdate) {
+    function savePassword(firebaseReference, password, masterCode, isUpdate) {
       var encrytedPassword = $cipherFactory.encrypt(JSON.stringify(password),
-        masterPassword);
+        masterCode);
 
       if (isUpdate) {
         return updatePassword(firebaseReference, encrytedPassword);

@@ -7,7 +7,8 @@
       'firebase',
       'ipmApp.core.constants',
       'ipmApp.core.firebase.service',
-      'ipmApp.passwords.service'
+      'ipmApp.passwords.service',
+      'ipmApp.vault.service'
     ])
     .component('passwordForm', passwordForm());
 
@@ -15,7 +16,6 @@
     var component = {
       templateUrl: 'app/passwords/password-form/password-form.view.html',
       bindings: {
-        masterPassword: '<',
         categoryId: '<',
         mode: '<',
         passwordId: '=?'
@@ -26,7 +26,7 @@
   }
 
   function PasswordFormController($scope, $state, $cipherFactory, $ionicHistory,
-    FirebaseService, PasswordsService) {
+    FirebaseService, PasswordsService, VaultService) {
 
     var vm = this;
     var unregister;
@@ -73,6 +73,7 @@
         vm.categoryId);
       vm.passwordReference = FirebaseService.getPasswordReference(vm.userUid,
         vm.categoryId, vm.passwordId);
+      vm.masterCode = VaultService.getMasterCode();
     }
 
     function findDigitalFootPrint() {
@@ -80,7 +81,7 @@
         var savedEncryptedDigitalFootprints = dataSnapshot.val().digitalFootprints;
         var encryptedPassword = savedEncryptedDigitalFootprints[vm.passwordId];
         vm.digitalFootprint = JSON.parse($cipherFactory.decrypt(encryptedPassword.cipherText,
-          vm.masterPassword, encryptedPassword.salt, encryptedPassword.iv));
+          vm.masterCode, encryptedPassword.salt, encryptedPassword.iv));
       });
     }
 
@@ -89,10 +90,9 @@
       var firebaseReference = isUpdate ? vm.passwordReference : vm.passwordsReference;
 
       PasswordsService.savePassword(firebaseReference, vm.digitalFootprint,
-        vm.masterPassword, isUpdate).then(function() {
+        vm.masterCode, isUpdate).then(function() {
         $state.go('passwords', {
-          categoryId: vm.categoryId,
-          masterPassword: vm.masterPassword
+          categoryId: vm.categoryId
         });
       });
     }
@@ -101,7 +101,7 @@
       PasswordsService.removePassword(vm.passwordReference).then(function() {
         $state.go('passwords', {
           categoryId: vm.categoryId,
-          masterPassword: vm.masterPassword
+          masterPassword: vm.masterCode
         });
       });
     }
