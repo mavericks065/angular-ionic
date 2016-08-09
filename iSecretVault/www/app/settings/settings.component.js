@@ -12,7 +12,6 @@
     var component = {
       templateUrl: 'app/settings/settings.view.html',
       bindings: {
-        masterPassword: '<'
       },
       controller: SettingsController
     };

@@ -6,7 +6,8 @@
       'ionic',
       'firebase',
       'ipmApp.core.constants',
-      'ipmApp.core.firebase.service'
+      'ipmApp.core.firebase.service',
+      'ipmApp.vault.service'
     ])
     .component('passwordList', passwordList());
 
@@ -14,7 +15,6 @@
     var component = {
       templateUrl: 'app/passwords/password-list/password-list.view.html',
       bindings: {
-        masterPassword: '<',
         categoryId: '<'
       },
       controller: PasswordListController
@@ -22,7 +22,8 @@
     return component;
   }
 
-  function PasswordListController($scope, $state, $cipherFactory, FirebaseService) {
+  function PasswordListController($scope, $state, $cipherFactory, FirebaseService,
+    VaultService) {
 
     var vm = this;
     var unregister;
@@ -41,6 +42,7 @@
       unregister = FirebaseService.getAuth().onAuthStateChanged(function(user) {
         if (user) {
           vm.userUid = user.uid;
+          vm.masterCode = VaultService.getMasterCode();
           vm.categoryReference = FirebaseService.getCategoryReference(vm.userUid,
             vm.categoryId);
           vm.digitalFootprints = [];
@@ -66,7 +68,7 @@
             vm.digitalFootprints.push({
               id: key,
               digitalFootprint: JSON.parse($cipherFactory.decrypt(savedEncryptedDigitalFootprints[key].cipherText,
-                vm.masterPassword, savedEncryptedDigitalFootprints[key].salt, savedEncryptedDigitalFootprints[key].iv))
+                vm.masterCode, savedEncryptedDigitalFootprints[key].salt, savedEncryptedDigitalFootprints[key].iv))
             });
           }
         }
@@ -74,7 +76,7 @@
     }
 
     function back() {
-      $state.go('tab.categories', {masterPassword: vm.masterPassword});
+      $state.go('tab.categories');
     }
   }
 })();

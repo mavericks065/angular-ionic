@@ -38,15 +38,15 @@
 
     // internal functions
 
-    function unlock(masterPassword) {
+    function unlock(masterCode) {
       vm.userReference.once('value').then(function(snapshot) {
         var userData = snapshot.val();
         var decipherPhrase = $cipherFactory.decrypt(userData.masterPassword.cipherText,
-          masterPassword, userData.masterPassword.salt, userData.masterPassword.iv,
+          masterCode, userData.masterPassword.salt, userData.masterPassword.iv,
           {output: 'hex'});
         if (decipherPhrase === 'Authenticated'.toHex()) {
-          VaultService.storeMasterCode(masterPassword);
-          $state.go('tab.categories', {masterPassword: masterPassword});
+          VaultService.storeMasterCode(masterCode);
+          $state.go('tab.categories');
         }
       });
     }

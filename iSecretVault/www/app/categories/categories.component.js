@@ -14,7 +14,6 @@
     var component = {
       templateUrl: 'app/categories/categories.view.html',
       bindings: {
-        masterPassword: '<'
       },
       controller: CategoriesController
     };

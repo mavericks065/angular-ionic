@@ -14,12 +14,12 @@
 
     // Internal functions
 
-    function storeMasterCode(masterPassword) {
-      vm.masterPassword = masterPassword;
+    function storeMasterCode(masterCode) {
+      vm.masterCode = masterCode;
     }
 
     function getMasterCode() {
-      return vm.masterPassword;
+      return vm.masterCode;
     }
   }
 })();
