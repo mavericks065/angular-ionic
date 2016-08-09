@@ -111,6 +111,28 @@
           }
         }
       })
+      .state('settingsVault', {
+        url: '/settings/:userId/vault',
+        cache: false,
+        resolve: {
+          userId: function($stateParams) {
+            return $stateParams.userId;
+          }
+        },
+        views: {
+          '': {
+            template: [
+              '<settings-vault',
+              'user-id="settingsVaultCtrl.userId"></settings-vault>'
+            ].join(' '),
+            controller: function(userId) {
+              var vm = this;
+              vm.userId = userId;
+            },
+            controllerAs: 'settingsVaultCtrl'
+          }
+        }
+      })
       .state('passwords', {
         url: '/masterPassword/:masterPassword/categories/:categoryId/passwords',
         cache: false,

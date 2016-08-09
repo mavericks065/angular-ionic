@@ -1,0 +1,42 @@
+<ion-view>
+  <ion-header-bar class="bar-positive">
+    <button class="left button button-icon icon ion-arrow-left-c"
+            ng-click="$ctrl.back()">
+    </button>
+    <h1 class="title">Reinitialise master code</h1>
+  </ion-header-bar>
+
+  <ion-content>
+    <div ng-form="$ctrl.resetPasswordForm">
+      <div class="padding-left padding-top padding-right">
+        <div class="list">
+          <label class="item item-input">
+            <input ng-model="$ctrl.masterPasswordInput"
+                   type="password"
+                   placeholder="Enter your master code"
+                   required/>
+          </label>
+          <label class="item item-input">
+            <input ng-model="$ctrl.newMasterPasswordInput"
+                   type="password"
+                   placeholder="New code"
+                   required/>
+          </label>
+          <label class="item item-input">
+            <input ng-model="$ctrl.newMasterPasswordConfirmationInput"
+                   type="password"
+                   placeholder="New code confirmation"
+                   required/>
+          </label>
+        </div>
+      </div>
+      <div class="padding-left padding-right">
+        <button class="button button-block button-balanced"
+                ng-click="$ctrl.updateMasterPassword()"
+                ng-disabled="$ctrl.resetPasswordForm.$invalid">
+          Update
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

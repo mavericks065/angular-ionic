@@ -2,26 +2,26 @@
   'use strict';
 
   angular
-    .module('ipmApp.settings.loginPassword.component', [
+    .module('ipmApp.settings.vault.component', [
       'ionic',
       'ipmApp.vault.service',
       'ipmApp.settings.service'
     ])
-    .component('settingsLoginPassword', settingsLoginPassword());
+    .component('settingsVault', settingsVault());
 
-  function settingsLoginPassword() {
+  function settingsVault() {
     var component = {
-      templateUrl: 'app/settings/settings-login-password/settings-login-password.view.html',
+      templateUrl: 'app/settings/settings-vault/settings-vault.view.html',
       bindings: {
         userId: '<'
       },
-      controller: SettingsLoginPasswordController
+      controller: SettingsVaultController
     };
     return component;
   }
 
-  function SettingsLoginPasswordController($state, $ionicHistory, $ionicPopup,
-    FirebaseService, SettingsService, VaultService) {
+  function SettingsVaultController($state, $ionicHistory, $ionicPopup, $cipherFactory,
+    FirebaseService, VaultService, SettingsService) {
     var vm = this;
     var unregister;
 
@@ -35,7 +35,7 @@
         if (user) {
           vm.user = user;
           vm.back = back;
-          vm.updatePassword = updatePassword;
+          vm.updateMasterPassword = updateMasterPassword;
         } else {
           $state.go('authentication');
         }
@@ -50,31 +50,22 @@
       $ionicHistory.goBack();
     }
 
-    function updatePassword() {
+    function updateMasterPassword() {
       var storedMasterPassword = VaultService.getMasterPassword();
       if (storedMasterPassword !== vm.masterPasswordInput) {
         $ionicPopup.alert({
           title: 'Master password incorrect',
           template: 'Please enter the good master password'
         });
-      } else if (vm.newPasswordInput !== vm.newPasswordConfirmationInput) {
+      } else if (vm.newMasterPasswordInput !== vm.newMasterPasswordConfirmationInput) {
         $ionicPopup.alert({
-          title: 'Password confirmation failed',
+          title: 'Master password confirmation failed',
           template: 'Please re-enter the password and its confirmation.'
         });
       } else {
-        SettingsService.updateLoginPassword(vm.user, vm.newPasswordInput)
-          .then(function(result) {
-          if (result === 'updated') {
-            $state.go('tab.settings');
-          } else {
-            console.log(result);
-            $ionicPopup.alert({
-              title: 'An error happened',
-              template: result.message
-            });
-          }
-        });
+        SettingsService.updateMasterCode(FirebaseService.getUserReference(vm.user.uid),
+          $cipherFactory.encrypt('Authenticated', vm.newMasterPasswordInput));
+        $state.go('tab.settings');
       }
     }
   }
