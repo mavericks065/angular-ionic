@@ -1,19 +1,19 @@
-<ion-tabs class="tabs-icon-top">
+<ion-tabs class="tabs-icon-top tabs-positive">
 
   <!-- Categories Tab -->
   <ion-tab title="Categories"
-           icon-off="ion-folder-outline"
+           icon-off="ion-folder"
            icon-on="ion-folder"
-           href="#/tab/categories/:masterPassword">
+           href="#/tab/masterPassword/:masterPassword/categories">
     <ion-nav-view name="tab-categories"></ion-nav-view>
   </ion-tab>
 
   <!-- Parameters Tab -->
-  <ion-tab title="Parameters"
-           icon-off="ion-ios-information-outline"
-           icon-on="ion-ios-information"
-           href="#/tab/parameters">
-    <ion-nav-view name="tab-parameters"></ion-nav-view>
+  <ion-tab title="Settings"
+           icon-off="ion-gear-a"
+           icon-on="ion-gear-a"
+           href="#/tab/settings">
+    <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
 
 </ion-tabs>

@@ -1,24 +1,24 @@
 <ion-view>
-  <ion-header-bar class="bar-stable">
+  <ion-header-bar class="bar-stable bar-positive">
     <h1 class="title">Create Master Password</h1>
   </ion-header-bar>
   <ion-content>
     <div class="padding-left padding-top padding-right padding-bottom">
       <h1>Welcome</h1>
       <p>
-        Please enter your master password, it will be requested everytime you will want to access the app.
+        Please enter your master code, it will be requested everytime you will want to access the app.
       </p>
       <p>
-        We highly recommend this password to be at least 10 characters containing letters, numbers and special characters.
+        We highly recommend this code to be at least 10 characters containing letters, numbers and special characters.
       </p>
     </div>
     <div class="padding-left padding-right">
       <label class="item item-input">
         <input ng-model="$ctrl.masterPassword"
                type="password"
-               placeholder="Master Password" />
+               placeholder="Master code" />
       </label>
-      <button class="button button-block button-positive"
+      <button class="button button-block button-balanced"
               ng-click="$ctrl.create($ctrl.masterPassword)" >
         Create
       </button>

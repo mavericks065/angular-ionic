@@ -13,6 +13,7 @@
     var self = this;
     self.authenticate = authenticate;
     self.register = register;
+    self.signOut = signOut;
 
     // Internal functions
 
@@ -27,6 +28,10 @@
             return authenticate(user);
           }
         });
+    }
+
+    function signOut() {
+      return fbAuth.$signOut();
     }
   }
 })();

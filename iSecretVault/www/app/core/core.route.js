@@ -6,6 +6,7 @@
       'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
+      'ipmApp.settings',
       'ipmApp.passwords',
       'ipmApp.core.firebase.service'
     ])
@@ -21,11 +22,6 @@
             template: '<authentication></authentication>'
           }
         }
-      })
-      .state('tab', {
-        url: '/tab',
-        abstract: true,
-        templateUrl: 'app/core/core.view.html'
       })
       .state('locked', {
         url: '/locked',
@@ -60,6 +56,11 @@
           }
         }
       })
+      .state('tab', {
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'app/core/core.view.html'
+      })
       .state('tab.categories', {
         url: '/masterPassword/:masterPassword/categories',
         cache: false,
@@ -79,12 +80,56 @@
           }
         }
       })
-      .state('tab.parameters', {
-        url: '/masterPassword/:masterPassword/parameters',
+      .state('tab.settings', {
+        url: '/settings',
+        cache: false,
         views: {
-          'tab-parameters': {
-            templateUrl: 'app/parameters/parameters.view.html',
-            controller: 'ParameterController as parameterCtrl'
+          'tab-settings': {
+            template: '<settings></settings>'
+          }
+        }
+      })
+      .state('settingsLoginPwd', {
+        url: '/settings/:userId/loginPassword',
+        cache: false,
+        resolve: {
+          userId: function($stateParams) {
+            return $stateParams.userId;
+          }
+        },
+        views: {
+          '': {
+            template: [
+              '<settings-login-password',
+              'user-id="settingsLoginPwdCtrl.userId"></settings-login-password>'
+            ].join(' '),
+            controller: function(userId) {
+              var vm = this;
+              vm.userId = userId;
+            },
+            controllerAs: 'settingsLoginPwdCtrl'
+          }
+        }
+      })
+      .state('settingsVault', {
+        url: '/settings/:userId/vault',
+        cache: false,
+        resolve: {
+          userId: function($stateParams) {
+            return $stateParams.userId;
+          }
+        },
+        views: {
+          '': {
+            template: [
+              '<settings-vault',
+              'user-id="settingsVaultCtrl.userId"></settings-vault>'
+            ].join(' '),
+            controller: function(userId) {
+              var vm = this;
+              vm.userId = userId;
+            },
+            controllerAs: 'settingsVaultCtrl'
           }
         }
       })
