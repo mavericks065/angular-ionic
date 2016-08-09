@@ -7,23 +7,23 @@
   </ion-header-bar>
 
   <ion-content>
-    <div ng-form="$ctrl.resetPasswordForm">
+    <div ng-form="$ctrl.resetCodeForm">
       <div class="padding-left padding-top padding-right">
         <div class="list">
           <label class="item item-input">
-            <input ng-model="$ctrl.masterPasswordInput"
+            <input ng-model="$ctrl.masterCodeInput"
                    type="password"
                    placeholder="Enter your master code"
                    required/>
           </label>
           <label class="item item-input">
-            <input ng-model="$ctrl.newMasterPasswordInput"
+            <input ng-model="$ctrl.newMasterCodeInput"
                    type="password"
                    placeholder="New code"
                    required/>
           </label>
           <label class="item item-input">
-            <input ng-model="$ctrl.newMasterPasswordConfirmationInput"
+            <input ng-model="$ctrl.newMasterCodeConfirmationInput"
                    type="password"
                    placeholder="New code confirmation"
                    required/>
@@ -32,8 +32,8 @@
       </div>
       <div class="padding-left padding-right">
         <button class="button button-block button-balanced"
-                ng-click="$ctrl.updateMasterPassword()"
-                ng-disabled="$ctrl.resetPasswordForm.$invalid">
+                ng-click="$ctrl.updateMasterCode()"
+                ng-disabled="$ctrl.resetCodeForm.$invalid">
           Update
         </button>
       </div>

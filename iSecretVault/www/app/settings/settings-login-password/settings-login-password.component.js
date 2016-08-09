@@ -51,11 +51,11 @@
     }
 
     function updatePassword() {
-      var storedMasterPassword = VaultService.getMasterPassword();
-      if (storedMasterPassword !== vm.masterPasswordInput) {
+      var storedMasterCode = VaultService.getMasterCode();
+      if (storedMasterCode !== vm.masterCodeInput) {
         $ionicPopup.alert({
-          title: 'Master password incorrect',
-          template: 'Please enter the good master password'
+          title: 'Master code incorrect',
+          template: 'Please enter the good master code'
         });
       } else if (vm.newPasswordInput !== vm.newPasswordConfirmationInput) {
         $ionicPopup.alert({

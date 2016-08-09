@@ -45,7 +45,7 @@
           masterPassword, userData.masterPassword.salt, userData.masterPassword.iv,
           {output: 'hex'});
         if (decipherPhrase === 'Authenticated'.toHex()) {
-          VaultService.storeMasterPassword(masterPassword);
+          VaultService.storeMasterCode(masterPassword);
           $state.go('tab.categories', {masterPassword: masterPassword});
         }
       });

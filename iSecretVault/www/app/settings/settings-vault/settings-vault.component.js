@@ -35,7 +35,7 @@
         if (user) {
           vm.user = user;
           vm.back = back;
-          vm.updateMasterPassword = updateMasterPassword;
+          vm.updateMasterCode = updateMasterCode;
         } else {
           $state.go('authentication');
         }
@@ -50,21 +50,22 @@
       $ionicHistory.goBack();
     }
 
-    function updateMasterPassword() {
-      var storedMasterPassword = VaultService.getMasterPassword();
-      if (storedMasterPassword !== vm.masterPasswordInput) {
+    function updateMasterCode() {
+      var storedMasterCode = VaultService.getMasterCode();
+      if (storedMasterCode !== vm.masterCodeInput) {
         $ionicPopup.alert({
           title: 'Master password incorrect',
           template: 'Please enter the good master password'
         });
-      } else if (vm.newMasterPasswordInput !== vm.newMasterPasswordConfirmationInput) {
+      } else if (vm.newMasterCodeInput !== vm.newMasterCodeConfirmationInput) {
         $ionicPopup.alert({
           title: 'Master password confirmation failed',
           template: 'Please re-enter the password and its confirmation.'
         });
       } else {
         SettingsService.updateMasterCode(FirebaseService.getUserReference(vm.user.uid),
-          $cipherFactory.encrypt('Authenticated', vm.newMasterPasswordInput));
+          $cipherFactory.encrypt('Authenticated', vm.newMasterCodeInput));
+        VaultService.storeMasterCode(vm.newMasterCodeInput);
         $state.go('tab.settings');
       }
     }

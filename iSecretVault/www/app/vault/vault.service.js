@@ -9,16 +9,16 @@
   function VaultService() {
     var vm = this;
 
-    vm.getMasterPassword = getMasterPassword;
-    vm.storeMasterPassword = storeMasterPassword;
+    vm.getMasterCode = getMasterCode;
+    vm.storeMasterCode = storeMasterCode;
 
     // Internal functions
 
-    function storeMasterPassword(masterPassword) {
+    function storeMasterCode(masterPassword) {
       vm.masterPassword = masterPassword;
     }
 
-    function getMasterPassword() {
+    function getMasterCode() {
       return vm.masterPassword;
     }
   }
