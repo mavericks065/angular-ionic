@@ -8,16 +8,19 @@
         Please enter your master code to access the app.
       </label>
     </div>
-    <div class="padding-left padding-right">
+    <div class="padding-left padding-right"
+         ng-form="$ctrl.unlockForm">
       <div class="list">
         <label class="item item-input">
           <input ng-model="$ctrl.masterCode"
                  type="password"
-                 placeholder="Master Code" />
+                 placeholder="Master Code"
+                 required/>
         </label>
       </div>
       <button class="button button-block button-balanced"
-              ng-click="$ctrl.unlock($ctrl.masterCode)" >
+              ng-click="$ctrl.unlock($ctrl.masterCode)"
+              ng-disabled="$ctrl.unlockForm.$invalid">
         Unlock
       </button>
     </div>

@@ -12,14 +12,17 @@
         We highly recommend this code to be at least 10 characters containing letters, numbers and special characters.
       </p>
     </div>
-    <div class="padding-left padding-right">
+    <div class="padding-left padding-right"
+         ng-form="$ctrl.createMasterCodeForm">
       <label class="item item-input">
         <input ng-model="$ctrl.masterCode"
                type="password"
-               placeholder="Master code" />
+               placeholder="Master code"
+               required/>
       </label>
       <button class="button button-block button-balanced"
-              ng-click="$ctrl.create($ctrl.masterCode)" >
+              ng-click="$ctrl.create($ctrl.masterCode)"
+              ng-disabled="$ctrl.createMasterCodeForm.$invalid">
         Create
       </button>
     </div>
