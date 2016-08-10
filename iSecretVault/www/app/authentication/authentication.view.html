@@ -25,11 +25,7 @@
               ng-disabled="$ctrl.authenticationForm.$invalid">
         Sign in
       </button>
-      <button class="button button-block button-stable"
-              ng-click="$ctrl.register(user)"
-              ng-disabled="$ctrl.authenticationForm.$invalid">
-        Sign up
-      </button>
+      <a ui-sref="signup()">Sign up here</a>
     </div>
   </ion-content>
 </ion-view>

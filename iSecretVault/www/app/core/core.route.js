@@ -8,6 +8,7 @@
       'ipmApp.categories',
       'ipmApp.settings',
       'ipmApp.passwords',
+      'ipmApp.authentication.signup',
       'ipmApp.core.firebase.service'
     ])
     .config(configRoute)
@@ -20,6 +21,14 @@
         views: {
           '': {
             template: '<authentication></authentication>'
+          }
+        }
+      })
+      .state('signup', {
+        url: '/signup',
+        views: {
+          '': {
+            template: '<authentication-signup></authentication-signup>'
           }
         }
       })

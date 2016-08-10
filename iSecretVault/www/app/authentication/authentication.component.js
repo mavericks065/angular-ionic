@@ -18,17 +18,11 @@
     return component;
   }
 
-  function AuthenticationController($state, $ionicHistory, $ionicPopup,
+  function AuthenticationController($state, $ionicPopup,
     AuthenticationService) {
-
-    $ionicHistory.nextViewOptions({
-      disableAnimate: true,
-      disableBack: true
-    });
 
     var vm = this;
     vm.login = login;
-    vm.register = register;
 
     // internal functions
 
@@ -42,20 +36,6 @@
         $ionicPopup.alert({
           title: 'Login failed',
           template: 'Log in is not possible, login or password are incorrect.'
-        });
-      });
-    }
-
-    function register(user) {
-      AuthenticationService.register(user).then(function(authData) {
-        if (authData) {
-          $state.go('createvault');
-        }
-      }).catch(function(error) {
-        console.error('Registration Failed: ' + error);
-        $ionicPopup.alert({
-          title: 'Registration failed',
-          template: 'Please try again in a few minutes.'
         });
       });
     }
