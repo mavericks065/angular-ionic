@@ -3,25 +3,31 @@
     <h1 class="title">Login</h1>
   </ion-header-bar>
   <ion-content padding="true" class="has-header">
-    <div class="padding-left padding-top padding-right">
+    <div class="padding-left padding-top padding-right"
+         ng-form="$ctrl.authenticationForm">
+
       <div class="list">
         <label class="item item-input">
           <input ng-model="user.username"
                  type="text"
-                 placeholder="Username" />
+                 placeholder="Username"
+                 required/>
         </label>
         <label class="item item-input">
           <input ng-model="user.password"
                  type="password"
-                 placeholder="Password" />
+                 placeholder="Password"
+                 required/>
         </label>
       </div>
       <button class="button button-block button-balanced"
-              ng-click="$ctrl.login(user)" >
+              ng-click="$ctrl.login(user)"
+              ng-disabled="$ctrl.authenticationForm.$invalid">
         Sign in
       </button>
       <button class="button button-block button-stable"
-              ng-click="$ctrl.register(user)" >
+              ng-click="$ctrl.register(user)"
+              ng-disabled="$ctrl.authenticationForm.$invalid">
         Sign up
       </button>
     </div>
