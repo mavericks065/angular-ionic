@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "lodash": "~4.6.1",
-    "angularfire": "^2.0.1"
+    "angularfire": "^2.0.1",
+    "angular-translate": "^2.11.1",
+    "angular-translate-loader-partial": "^2.11.1"
   }
 }

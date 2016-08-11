@@ -3,6 +3,9 @@
 
   angular
     .module('ipmApp.core.route', [
+      'pascalprecht.translate',
+
+      'ipmApp.core.constants',
       'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
@@ -18,6 +21,9 @@
     $stateProvider
       .state('authentication', {
         url: '/authentication',
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('authentication');
+        },
         views: {
           '': {
             template: '<authentication></authentication>'
