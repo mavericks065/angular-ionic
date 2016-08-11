@@ -1,0 +1,9 @@
+{
+  "passwordFormTitle": "Password",
+  "title": "Title",
+  "username": "Username",
+  "password": "Password",
+  "hint": "hint",
+  "saveButton": "Save",
+  "deleteButton": "Delete password"
+}

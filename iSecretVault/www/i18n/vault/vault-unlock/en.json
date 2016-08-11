@@ -1,0 +1,6 @@
+{
+  "vaultUnlockTitle": "Unlock iSecretVault",
+  "instruction": "Please enter your master code to access the app.",
+  "masterCode": "Master code",
+  "unlockButton": "Unlock"
+}

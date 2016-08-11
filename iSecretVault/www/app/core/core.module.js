@@ -2,14 +2,8 @@
   'use strict';
 
   angular.module('ipmApp.core', [
-    'ipmApp.core.constants',
-    'ipmApp.core.route',
-    'ipmApp.core.firebase.service',
-    'ipmApp.authentication',
-    'ipmApp.vault',
-    'ipmApp.categories',
-    'ipmApp.settings',
-    'ipmApp.passwords',
-    'ipmApp.cipher.service'
+    'ipmApp.core.config',
+    'ipmApp.core.init',
+    'ipmApp.core.route'
   ]);
 })();

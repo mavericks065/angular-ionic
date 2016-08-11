@@ -20,7 +20,7 @@
     return component;
   }
 
-  function CategoriesController($scope, $state, $timeout, $ionicPopup,
+  function CategoriesController($scope, $state, $timeout, $ionicPopup, $translate,
     FirebaseService, CategoriesService) {
 
     var vm = this;
@@ -92,8 +92,8 @@
 
     function add() {
       $ionicPopup.prompt({
-        title: 'Enter a new category',
-        inputType: 'text'
+        title: $translate.instant('addModalTitle'),
+        inputType: $translate.instant('addModalInput')
       }).then(function(result) {
         if (result) {
           var newCategoryReference = FirebaseService.getCategoryReference(vm.userUid,

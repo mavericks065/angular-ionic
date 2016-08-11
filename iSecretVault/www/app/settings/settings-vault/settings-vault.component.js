@@ -21,7 +21,7 @@
   }
 
   function SettingsVaultController($state, $ionicHistory, $ionicPopup, $cipherFactory,
-    FirebaseService, VaultService, SettingsService) {
+    $translate, FirebaseService, VaultService, SettingsService) {
     var vm = this;
     var unregister;
 
@@ -54,13 +54,13 @@
       var storedMasterCode = VaultService.getMasterCode();
       if (storedMasterCode !== vm.masterCodeInput) {
         $ionicPopup.alert({
-          title: 'Master password incorrect',
-          template: 'Please enter the good master password'
+          title: $translate.instant('errorMCTitle'),
+          template: $translate.instant('errorMCMsg')
         });
       } else if (vm.newMasterCodeInput !== vm.newMasterCodeConfirmationInput) {
         $ionicPopup.alert({
-          title: 'Master password confirmation failed',
-          template: 'Please re-enter the password and its confirmation.'
+          title: $translate.instant('errorNewPwdTitle'),
+          template: $translate.instant('errorNewPwdMsg')
         });
       } else {
         SettingsService.updateMasterCode(FirebaseService.getUserReference(vm.user.uid),

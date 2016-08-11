@@ -21,7 +21,7 @@
   }
 
   function SettingsLoginPasswordController($state, $ionicHistory, $ionicPopup,
-    FirebaseService, SettingsService, VaultService) {
+    $translate, FirebaseService, SettingsService, VaultService) {
     var vm = this;
     var unregister;
 
@@ -54,13 +54,13 @@
       var storedMasterCode = VaultService.getMasterCode();
       if (storedMasterCode !== vm.masterCodeInput) {
         $ionicPopup.alert({
-          title: 'Master code incorrect',
-          template: 'Please enter the good master code'
+          title: $translate.instant('errorMCTitle'),
+          template: $translate.instant('errorMCMsg')
         });
       } else if (vm.newPasswordInput !== vm.newPasswordConfirmationInput) {
         $ionicPopup.alert({
-          title: 'Password confirmation failed',
-          template: 'Please re-enter the password and its confirmation.'
+          title: $translate.instant('errorNewPwdTitle'),
+          template: $translate.instant('errorNewPwdMsg')
         });
       } else {
         SettingsService.updateLoginPassword(vm.user, vm.newPasswordInput)
@@ -70,7 +70,7 @@
           } else {
             console.log(result);
             $ionicPopup.alert({
-              title: 'An error happened',
+              title: $translate.instant('errorTitle'),
               template: result.message
             });
           }

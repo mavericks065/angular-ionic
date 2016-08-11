@@ -1,0 +1,11 @@
+{
+  "signupTitle": "Sign up",
+  "username": "Username - email address",
+  "password": "Password",
+  "passwordConfirmation": "Password confirmation",
+  "signupButton": "Sign up",
+  "errorTitle": "Passwords error",
+  "errorMsg": "Sorry but your passwords are not exact.'",
+  "registrationErrorTitle": "Registration failed",
+  "registrationErrorMsg": "Please try again in a few minutes."
+}

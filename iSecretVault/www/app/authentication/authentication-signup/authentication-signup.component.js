@@ -18,7 +18,8 @@
     return component;
   }
 
-  function SignupController($state, $ionicHistory, $ionicPopup, AuthenticationService) {
+  function SignupController($state, $ionicHistory, $ionicPopup, $translate,
+    AuthenticationService) {
 
     var vm = this;
     vm.back = back;
@@ -35,15 +36,16 @@
         }).catch(function(error) {
           console.error('Registration Failed: ' + error);
           $ionicPopup.alert({
-            title: 'Registration failed',
-            template: 'Please try again in a few minutes.'
+            title: $translate.instant('registrationErrorTitle'),
+            template: $translate.instant('registrationErrorMsg')
           });
         });
+      } else {
+        $ionicPopup.alert({
+          title: $translate.instant('errorTitle'),
+          template: $translate.instant('errorMsg')
+        });
       }
-      $ionicPopup.alert({
-        title: 'Passwords error',
-        template: 'Sorry but your passwords are not exact.'
-      });
     }
 
     function back() {

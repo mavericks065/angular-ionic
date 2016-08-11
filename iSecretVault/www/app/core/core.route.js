@@ -3,6 +3,9 @@
 
   angular
     .module('ipmApp.core.route', [
+      'pascalprecht.translate',
+
+      'ipmApp.core.constants',
       'ipmApp.authentication',
       'ipmApp.vault',
       'ipmApp.categories',
@@ -18,6 +21,9 @@
     $stateProvider
       .state('authentication', {
         url: '/authentication',
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('authentication');
+        },
         views: {
           '': {
             template: '<authentication></authentication>'
@@ -26,6 +32,9 @@
       })
       .state('signup', {
         url: '/signup',
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('authentication/signup');
+        },
         views: {
           '': {
             template: '<authentication-signup></authentication-signup>'
@@ -35,6 +44,9 @@
       .state('locked', {
         url: '/locked',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('vault/vault-unlock');
+        },
         views: {
           '': {
             template: [
@@ -51,6 +63,9 @@
       })
       .state('createvault', {
         url: '/createvault',
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('vault/vault-create');
+        },
         views: {
           '': {
             template: [
@@ -73,6 +88,9 @@
       .state('tab.categories', {
         url: '/categories',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('categories');
+        },
         views: {
           'tab-categories': {
             template: '<categories></categories>'
@@ -82,6 +100,9 @@
       .state('tab.settings', {
         url: '/settings',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('settings');
+        },
         views: {
           'tab-settings': {
             template: '<settings></settings>'
@@ -91,6 +112,9 @@
       .state('settingsLoginPwd', {
         url: '/settings/:userId/loginPassword',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('settings/settings-login-password');
+        },
         resolve: {
           userId: function($stateParams) {
             return $stateParams.userId;
@@ -113,6 +137,9 @@
       .state('settingsVault', {
         url: '/settings/:userId/vault',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('settings/settings-vault');
+        },
         resolve: {
           userId: function($stateParams) {
             return $stateParams.userId;
@@ -135,6 +162,9 @@
       .state('passwords', {
         url: '/categories/:categoryId/passwords',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('passwords/password-list');
+        },
         resolve: {
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
@@ -156,6 +186,9 @@
       })
       .state('newpassword', {
         url: '/categories/:categoryId/passwords',
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('passwords/password-display');
+        },
         resolve: {
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
@@ -177,6 +210,9 @@
       })
       .state('editpassword', {
         url: '/categories/:categoryId/passwords/:passwordId',
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('passwords/password-form');
+        },
         resolve: {
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
@@ -207,6 +243,9 @@
       .state('viewpassword', {
         url: '/categories/:categoryId/passwords/:passwordId',
         cache: false,
+        onEnter: function($translatePartialLoader) {
+          $translatePartialLoader.addPart('passwords/password-display');
+        },
         resolve: {
           categoryId: function($stateParams) {
             return $stateParams.categoryId;
