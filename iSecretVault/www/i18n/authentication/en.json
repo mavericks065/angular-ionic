@@ -3,5 +3,7 @@
   "username": "Username",
   "password": "Password",
   "signinButton": "Sign in",
-  "signupLink": "Sign up here"
+  "signupLink": "Sign up here",
+  "errorTitle": "Login failed",
+  "errorMsg": "Log in is not possible, login or password are incorrect."
 }

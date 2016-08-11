@@ -18,7 +18,7 @@
     return component;
   }
 
-  function AuthenticationController($state, $ionicPopup,
+  function AuthenticationController($state, $ionicPopup, $translate,
     AuthenticationService) {
 
     var vm = this;
@@ -34,8 +34,8 @@
       }).catch(function(error) {
         console.error('Login Failed: ' + error);
         $ionicPopup.alert({
-          title: 'Login failed',
-          template: 'Log in is not possible, login or password are incorrect.'
+          title: $translate.instant('errorTitle'),
+          template: $translate.instant('errorMsg')
         });
       });
     }

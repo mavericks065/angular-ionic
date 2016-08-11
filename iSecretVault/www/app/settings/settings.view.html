@@ -1,25 +1,26 @@
 <ion-view>
   <ion-header-bar class="bar-positive">
-    <h1 class="title">Settings</h1>
+    <h1 class="title" translate>settingsTitle</h1>
   </ion-header-bar>
 
   <ion-content padding="true" class="has-header">
     <div>
       <ion-list>
-        <div class="item item-divider">
-          Accessibility
+        <div class="item item-divider" translate>
+          accessibilityList
         </div>
         <ion-item ui-sref="settingsLoginPwd({userId: $ctrl.userId})">
-          Reinitialise login password
+          {{ 'loginPwdLink' | translate}}
         </ion-item>
         <ion-item ui-sref="settingsVault({userId: $ctrl.userId})">
-          Reinitialise master code
+          {{ 'masterCodeLink' | translate}}
         </ion-item>
       </ion-list>
 
       <button class="button button-block button-assertive"
-              ng-click="$ctrl.signOut()" >
-        Sign out
+              ng-click="$ctrl.signOut()"
+              translate>
+        signoutButton
       </button>
     </div>
   </ion-content>

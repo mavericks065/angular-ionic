@@ -1,8 +1,10 @@
 <ion-view>
   <ion-header-bar class="bar-positive">
-    <h1 class="title">Categories</h1>
-    <button class="right button button-clear" ng-click="$ctrl.add()">
-      Add
+    <h1 class="title" translate>categoriesTitle</h1>
+    <button class="right button button-clear"
+            ng-click="$ctrl.add()"
+            translate>
+      addButton
     </button>
   </ion-header-bar>
   <ion-content overflow-scroll="true">
@@ -18,8 +20,9 @@
         {{ category.category }}
 
         <ion-option-button class="button-assertive"
-                         ng-click="$ctrl.deleteCategory(category)">
-          Delete
+                           ng-click="$ctrl.deleteCategory(category)"
+                           translate>
+          deleteButton
         </ion-option-button>
 
       </ion-item>

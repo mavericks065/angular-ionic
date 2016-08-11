@@ -1,0 +1,11 @@
+{
+  "settingsMasterCodeTitle": "Reinitialise master code",
+  "masterCodeInput": "Enter your master code",
+  "newMasterCodeInput": "New code",
+  "newMasterCodeConfirmationInput": "New code confirmation",
+  "updateButton": "Update",
+  "errorMCTitle": "Master code incorrect",
+  "errorMCMsg": "Please enter the good master code",
+  "errorNewPwdTitle": "Password confirmation failed",
+  "errorNewPwdMsg": "Please re-enter the password and its confirmation."
+}

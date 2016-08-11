@@ -1,0 +1,6 @@
+{
+  "vaultCreateTitle": "Create Master Code",
+  "recommendation": "<h1>Welcome</h1><p>Please enter your master code, it will be requested everytime you will want to access the app.</p><p>We highly recommend this code to be at least 10 characters containing letters, numbers and special characters.</p>",
+  "masterCode": "Master code",
+  "createButton": "Create"
+}

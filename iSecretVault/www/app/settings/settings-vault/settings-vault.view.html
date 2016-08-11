@@ -3,7 +3,7 @@
     <button class="left button button-icon icon ion-arrow-left-c"
             ng-click="$ctrl.back()">
     </button>
-    <h1 class="title">Reinitialise master code</h1>
+    <h1 class="title" translate>settingsMasterCodeTitle</h1>
   </ion-header-bar>
 
   <ion-content>
@@ -13,19 +13,19 @@
           <label class="item item-input">
             <input ng-model="$ctrl.masterCodeInput"
                    type="password"
-                   placeholder="Enter your master code"
+                   placeholder="{{ 'masterCodeInput' | translate }}"
                    required/>
           </label>
           <label class="item item-input">
             <input ng-model="$ctrl.newMasterCodeInput"
                    type="password"
-                   placeholder="New code"
+                   placeholder="{{ 'newMasterCodeInput' | translate }}"
                    required/>
           </label>
           <label class="item item-input">
             <input ng-model="$ctrl.newMasterCodeConfirmationInput"
                    type="password"
-                   placeholder="New code confirmation"
+                   placeholder="{{ 'newMasterCodeConfirmationInput' | translate }}"
                    required/>
           </label>
         </div>
@@ -33,8 +33,9 @@
       <div class="padding-left padding-right">
         <button class="button button-block button-balanced"
                 ng-click="$ctrl.updateMasterCode()"
-                ng-disabled="$ctrl.resetCodeForm.$invalid">
-          Update
+                ng-disabled="$ctrl.resetCodeForm.$invalid"
+                translate>
+          updateButton
         </button>
       </div>
     </div>
