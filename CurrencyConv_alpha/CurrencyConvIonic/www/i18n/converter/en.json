@@ -1,0 +1,10 @@
+{
+  "converter": {
+    "title": "CurrencyConv",
+    "field": {
+      "amount": {
+        "placeholder": "Type an amount"
+      }
+    }
+  }
+}

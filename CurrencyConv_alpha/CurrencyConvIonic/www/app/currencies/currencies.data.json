@@ -1,0 +1,79 @@
+[{
+  "code": "USD",
+  "name": "United State Dollar"
+}, {
+  "code": "EUR",
+  "name": "Euro"
+}, {
+  "code": "GBP",
+  "name": "British Pound Sterling"
+}, {
+  "code": "CAD",
+  "name": "Canadian Dollar"
+}, {
+  "code": "HKD",
+  "name": "Hong Kong Dollar"
+}, {
+  "code": "AUD",
+  "name": "Australian Dollar"
+}, {
+  "code": "BRL",
+  "name": "Brazilian Real"
+}, {
+  "code": "CHF",
+  "name": "Swiss Franc"
+}, {
+  "code": "CNY",
+  "name": "Chinese Yuan"
+}, {
+  "code": "AED",
+  "name": "United Arab Emirates Dirham"
+}, {
+  "code": "ARS",
+  "name": "Argentine Peso"
+}, {
+  "code": "DKK",
+  "name": "Danish Krone"
+}, {
+  "code": "ILS",
+  "name": "Israeli New Sheqel"
+}, {
+  "code": "INR",
+  "name": "Indian Rupee"
+}, {
+  "code": "JPY",
+  "name": "Japanese Yen"
+}, {
+  "code": "KRW",
+  "name": "South Korean Won"
+}, {
+  "code": "MXN",
+  "name": "Mexican Peso"
+}, {
+  "code": "NOK",
+  "name": "Norwegian Krone"
+}, {
+  "code": "NZD",
+  "name": "New Zealand Dollar"
+}, {
+  "code": "PHP",
+  "name": "Philippine Peso"
+}, {
+  "code": "QAR",
+  "name": "Qatari Rial"
+}, {
+  "code": "RUB",
+  "name": "Russian Ruble"
+}, {
+  "code": "SAR",
+  "name": "Saudi Riyal"
+}, {
+  "code": "SEK",
+  "name": "Swedish Krona"
+}, {
+  "code": "SGD",
+  "name": "Singapore Dollar"
+}, {
+  "code": "THB",
+  "name": "Thai Baht"
+}]

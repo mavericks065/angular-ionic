@@ -1,0 +1,12 @@
+{
+  "name": "CurrencyConv",
+  "app_id": "2ec97edb",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

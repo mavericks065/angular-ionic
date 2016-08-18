@@ -1,0 +1,24 @@
+<ion-view>
+  <ion-nav-title translate>converter.title</ion-nav-title>
+  <ion-content>
+    <div class="list list-inset" name="input-currency">
+      <label class="item item-input item-select" >
+        <input type="number" name="input-currency-amount"
+        placeholder="{{ 'converter.field.amount.placeholder' | translate }}"
+        pattern="[0-9]*"
+        ng-model="converterCtrl.amount" />
+        <select ng-model="converterCtrl.selectedCurrency"
+                ng-options="currency as currency.code for currency in converterCtrl.currencies">
+        </select>
+      </label>
+    </div>
+    <div class="list list-inset" name="output-currency">
+      <ion-list >
+        <ion-item ng-repeat="currency in converterCtrl.getAvailableCurrencies()">
+          <h4>{{ currency.code }}</h4> <h5>{{ currency.name }}</h5>
+          <p>{{ converterCtrl.getConvertedAmount() }}</p>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-view>

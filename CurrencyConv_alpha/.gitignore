@@ -1,0 +1,6 @@
+CurrencyConvServer/node_modules
+CurrencyConvIonic/www/lib
+.DS_Store
+CurrencyConvIonic/platforms
+CurrencyConvIonic/plugins
+CurrencyConvIonic/node_modules
