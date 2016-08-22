@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
+import { AngularFire, AngularFireAuth } from 'angularfire2';
 
 @Injectable()
 export class CoreFirebaseService {
 
-  constructor(public angularfire: AngularFire) {}
+  constructor(private angularfire: AngularFire) {}
+
+  getFirebaseAuth(): AngularFireAuth {
+    return this.angularfire.auth;
+  }
 
 }

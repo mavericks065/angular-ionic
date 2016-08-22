@@ -6,25 +6,31 @@
           <label class="col-sm-2 col-lg-2 control-label">
             Login / email
           </label>
-          <input class="col-sm-6 col-lg-6" type="email" />
+          <input class="col-sm-6 col-lg-6"
+                 type="email"
+                 [(ngModel)]="user.email"/>
         </div>
 
         <div class="form-group">
           <label class="col-sm-2 col-lg-2 control-label">
             Password
           </label>
-          <input class="col-sm-6 col-lg-6" type="password" />
+          <input class="col-sm-6 col-lg-6"
+                 type="password"
+                 [(ngModel)]="user.password" />
         </div>
 
         <div class="form-group">
           <label class="col-sm-2 col-lg-2 control-label">
             Password confirmation
           </label>
-          <input class="col-sm-6 col-lg-6" type="password" />
+          <input class="col-sm-6 col-lg-6"
+                 type="password"
+                 [(ngModel)]="user.passwordConfirmation"/>
         </div>
 
         <div class="form-group">
-          <button>Sign up</button>
+          <button (click)="signup()">Sign up</button>
         </div>
       </div>
     </div>
