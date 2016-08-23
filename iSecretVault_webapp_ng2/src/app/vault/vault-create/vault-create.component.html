@@ -1,1 +1,28 @@
-VAULT CREATE Component
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="padding-top padding-bottom">
+        <p>Please choose a master code. This code will be used as a second step to verify your identity.</p>
+      </div>
+      <div class="form-horizontal padding-top">
+        <div class="form-group">
+          <label class="col-sm-2 col-lg-2 control-label">Master Code</label>
+          <input class="col-sm-6 col-lg-6"
+                 type="password"
+                 [(ngModel)]="user.masterCode"
+                 required/>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 col-lg-2 control-label">Master Code confirmation</label>
+          <input class="col-sm-6 col-lg-6"
+                 type="password"
+                 [(ngModel)]="user.masterCodeConfirmation"
+                 required/>
+        </div>
+        <button type="submit" (click)="create()">
+          Create your Master Code
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

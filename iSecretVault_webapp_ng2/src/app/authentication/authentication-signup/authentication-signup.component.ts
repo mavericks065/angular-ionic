@@ -19,7 +19,7 @@ export class AuthenticationSignupComponent {
               private authenticationService: AuthenticationService) {
   }
 
-  signup() {
+  signup(): void {
     if (this.validatePasswords()) {
       this.authenticationService.signup(this.user).then((result) => {
         // navigate somewhere

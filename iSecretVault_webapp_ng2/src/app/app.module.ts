@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { routing,
          appRoutingProviders } from './app.routing';
 
-// import *as firebase from 'firebase';
+/* tslint:disable:no-unused-variable */
+import * as firebase from 'firebase';
 import { AngularFireModule } from 'angularfire2';
 
 import { CoreModule } from './shared/core/core.module';
