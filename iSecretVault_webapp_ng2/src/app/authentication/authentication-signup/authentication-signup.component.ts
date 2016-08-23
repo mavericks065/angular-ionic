@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../authentication.service';
 
@@ -14,13 +15,15 @@ export class AuthenticationSignupComponent {
 
   private user: any = {};
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) {
   }
 
-  signup() {
+  signup(): void {
     if (this.validatePasswords()) {
       this.authenticationService.signup(this.user).then((result) => {
         // navigate somewhere
+        this.router.navigate(['/vault']);
       }).catch((error) => {
         console.log(error);
       });
