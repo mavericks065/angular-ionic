@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AuthenticationSignupComponent }
   from './authentication/authentication-signup/authentication-signup.component';
 
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 
 @Component({
   selector: 'app-root',

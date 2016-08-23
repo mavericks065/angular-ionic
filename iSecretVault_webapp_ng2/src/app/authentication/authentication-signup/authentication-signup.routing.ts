@@ -2,7 +2,7 @@ import { Routes, RouterModule }   from '@angular/router';
 
 import { AuthenticationSignupComponent } from './authentication-signup.component';
 
-const authenticationSignupRoutes: Routes = [
+export const authenticationSignupRoutes: Routes = [
   { path: 'signup', component: AuthenticationSignupComponent }
 ];
 
