@@ -13,6 +13,8 @@ import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { CoreModule } from './shared/core/core.module';
 import { VaultCreateModule } from './vault/vault-create/vault-create.module';
+import { VaultUnlockModule } from './vault/vault-unlock/vault-unlock.module';
+import { CategoriesModule } from './categories/categories.module';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCdBSHSDDXoZdDR7BCxr6-XJR2lvfBY2i4',
@@ -34,7 +36,9 @@ const FIREBASE_AUTH_CONFIG = {
     FormsModule,
     routing,
     CoreModule,
-    VaultCreateModule
+    VaultCreateModule,
+    VaultUnlockModule,
+    CategoriesModule
   ],
   declarations: [
     AppComponent
