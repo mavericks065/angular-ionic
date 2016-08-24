@@ -22,7 +22,7 @@ export class AuthenticationSignupComponent {
   signup(): void {
     if (this.validatePasswords()) {
       this.authenticationService.signup(this.user).then((result) => {
-        // navigate somewhere
+        // navigate to the create vault view
         this.router.navigate(['/vault']);
       }).catch((error) => {
         console.log(error);

@@ -12,4 +12,11 @@ export class AuthenticationService {
   signup(user: any): firebase.Promise<FirebaseAuthState> {
     return this.firebaseService.getFirebaseAuth().createUser(user);
   }
+
+  login(user: any): firebase.Promise<FirebaseAuthState> {
+    return this.firebaseService.getFirebaseAuth().login({
+      email: user.email,
+      password: user.password
+    });
+  }
 }

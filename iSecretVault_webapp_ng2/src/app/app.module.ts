@@ -9,7 +9,7 @@ import { routing,
 
 /* tslint:disable:no-unused-variable */
 import * as firebase from 'firebase';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { CoreModule } from './shared/core/core.module';
 import { VaultCreateModule } from './vault/vault-create/vault-create.module';
@@ -21,10 +21,15 @@ const FIREBASE_CONFIG = {
   storageBucket: 'isecrevault-webapp-ng2.appspot.com'
 };
 
+const FIREBASE_AUTH_CONFIG = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+};
+
 @NgModule({
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireModule.initializeApp(FIREBASE_CONFIG, FIREBASE_AUTH_CONFIG),
     CommonModule,
     FormsModule,
     routing,

@@ -1,9 +1,11 @@
 import { Routes, RouterModule }   from '@angular/router';
 
 import { authenticationSignupRoutes } from './authentication/authentication-signup/authentication-signup.routing';
+import { authenticationLoginRoutes } from './authentication/authentication-login/authentication-login.routing';
 
 const appRoutes: Routes = [
-  ...authenticationSignupRoutes
+  ...authenticationSignupRoutes,
+  ...authenticationLoginRoutes
 ];
 
 export const appRoutingProviders: any[] = [
