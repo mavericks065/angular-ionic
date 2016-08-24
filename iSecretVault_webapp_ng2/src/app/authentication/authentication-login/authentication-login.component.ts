@@ -22,7 +22,7 @@ export class AuthenticationLoginComponent {
   login(): void {
     this.authenticationService.login(this.user).then((result) => {
       // navigate to unlock view
-      this.router.navigate(['/vault']);
+      this.router.navigate(['/unlock']);
     }).catch((error) => {
       console.log('error : ' + error);
     });

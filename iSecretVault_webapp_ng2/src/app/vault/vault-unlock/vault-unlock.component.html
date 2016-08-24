@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="padding-top padding-bottom">
+        <p>Please enter your master code.</p>
+      </div>
+      <div class="form-horizontal padding-top">
+        <div class="form-group">
+          <label class="col-sm-2 col-lg-2 control-label">Master Code</label>
+          <input class="col-sm-6 col-lg-6"
+                 type="password"
+                 [(ngModel)]="user.masterCode"
+                 required/>
+        </div>
+        <button type="submit" (click)="unlock()">
+          Unlock access
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
