@@ -40,7 +40,7 @@ export class VaultUnlockComponent implements OnInit {
     this.angularfire.database.object(this.user.reference).subscribe((data) => {
       if (this.checkMasterCode(data.masterCode)) {
         // store master code into vault service
-        this.vaultService.storeMasterCode(this.user.masterCode);
+        this.vaultService.storeMasterCode(data.masterCode);
         // navigate to categories link
         this.router.navigate(['/categories']);
       } else {

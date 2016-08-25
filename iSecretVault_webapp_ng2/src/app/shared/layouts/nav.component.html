@@ -1,0 +1,39 @@
+<nav>
+  <ol class="breadcrumb">
+    <li>
+      <a href="https://au.linkedin.com/in/nicolas-guignard-12559b76">
+        <span>Nicolas' Linkedin</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://twitter.com/nicolasguignard">
+        <span>Nicolas' Twitter</span>
+      </a>
+    </li>
+    <li *ngIf="!(angularfire.auth | async)">
+      <a routerLink="/signup">
+        Sign up
+      </a>
+    </li>
+    <li *ngIf="!(angularfire.auth | async)">
+      <a routerLink="/login">
+        Login
+      </a>
+    </li>
+    <li *ngIf="angularfire.auth | async">
+      <a (click)="logout()">
+        Log out
+      </a>
+    </li>
+    <li *ngIf="canDisplayInternalMenu()">
+      <a >
+        Categories
+      </a>
+    </li>
+    <li *ngIf="canDisplayInternalMenu()">
+      <a>
+        Settings
+      </a>
+    </li>
+  </ol>
+</nav>

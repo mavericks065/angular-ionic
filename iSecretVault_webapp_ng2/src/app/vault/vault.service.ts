@@ -11,10 +11,10 @@ export class VaultService {
   constructor() {}
 
   storeMasterCode(masterCode: string): void {
-      this.masterCode = masterCode;
-    }
+    this.masterCode = masterCode;
+  }
 
-    getMasterCode(): string {
-      return this.masterCode;
-    }
+  getMasterCode(): string {
+    return this.masterCode;
+  }
 }

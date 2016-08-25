@@ -17,9 +17,9 @@ export class CategoriesComponent implements OnInit {
 
   private user: any = {};
 
-  constructor(private firebaseService: CoreFirebaseService,
-    private router: Router,
-    private angularfire: AngularFire) {
+  constructor(private router: Router,
+    private angularfire: AngularFire,
+    private firebaseService: CoreFirebaseService) {
   }
 
   ngOnInit() {
