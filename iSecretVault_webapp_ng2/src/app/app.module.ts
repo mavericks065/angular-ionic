@@ -12,6 +12,7 @@ import * as firebase from 'firebase';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { CoreModule } from './shared/core/core.module';
+import { VaultService } from './vault/vault.service';
 import { VaultCreateModule } from './vault/vault-create/vault-create.module';
 import { VaultUnlockModule } from './vault/vault-unlock/vault-unlock.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -44,7 +45,8 @@ const FIREBASE_AUTH_CONFIG = {
     AppComponent
   ],
   providers: [
-    appRoutingProviders
+    appRoutingProviders,
+    VaultService
   ],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]

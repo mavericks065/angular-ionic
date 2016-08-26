@@ -9,8 +9,7 @@ import { VaultService } from './../vault.service';
   selector: 'vault-unlock',
   templateUrl: 'vault-unlock.component.html',
   providers: [
-    CoreFirebaseService,
-    VaultService
+    CoreFirebaseService
   ],
   styleUrls: ['vault-unlock.component.css']
 })
@@ -42,6 +41,8 @@ export class VaultUnlockComponent implements OnInit {
         // store master code into vault service
         this.vaultService.storeMasterCode(data.masterCode);
         // navigate to categories link
+        console.log(this.vaultService);
+        console.log(this.vaultService.getMasterCode());
         this.router.navigate(['/categories']);
       } else {
         console.log('Master code invalidated');
