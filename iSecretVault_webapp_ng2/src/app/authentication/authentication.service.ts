@@ -19,4 +19,8 @@ export class AuthenticationService {
       password: user.password
     });
   }
+
+  logout(): void {
+    this.firebaseService.getFirebaseAuth().logout();
+  }
 }

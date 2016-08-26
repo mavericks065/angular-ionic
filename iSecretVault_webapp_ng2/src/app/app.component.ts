@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AuthenticationSignupComponent }
-  from './authentication/authentication-signup/authentication-signup.component';
+import { NavComponent } from './shared/layouts/nav.component';
 
 import { AngularFire } from 'angularfire2';
 
@@ -10,7 +9,7 @@ import { AngularFire } from 'angularfire2';
   templateUrl: 'app.component.html',
   providers: [ AngularFire ],
   directives: [
-    AuthenticationSignupComponent
+    NavComponent
   ],
   styleUrls: ['app.component.css']
 })

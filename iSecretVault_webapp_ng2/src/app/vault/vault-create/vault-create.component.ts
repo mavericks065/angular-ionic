@@ -7,8 +7,7 @@ import { VaultService } from './../vault.service';
   selector: 'vault-create',
   templateUrl: 'vault-create.component.html',
   providers: [
-    CoreFirebaseService,
-    VaultService
+    CoreFirebaseService
   ],
   styleUrls: ['vault-create.component.css']
 })
