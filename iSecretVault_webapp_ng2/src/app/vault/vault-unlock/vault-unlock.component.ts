@@ -17,10 +17,10 @@ export class VaultUnlockComponent implements OnInit {
 
   private user: any = {};
 
-  constructor(private firebaseService: CoreFirebaseService,
-    private vaultService: VaultService,
-    private router: Router,
-    private angularfire: AngularFire) {
+  constructor(private router: Router,
+    private angularfire: AngularFire,
+    private firebaseService: CoreFirebaseService,
+    private vaultService: VaultService) {
   }
 
   ngOnInit() {
@@ -41,8 +41,6 @@ export class VaultUnlockComponent implements OnInit {
         // store master code into vault service
         this.vaultService.storeMasterCode(data.masterCode);
         // navigate to categories link
-        console.log(this.vaultService);
-        console.log(this.vaultService.getMasterCode());
         this.router.navigate(['/categories']);
       } else {
         console.log('Master code invalidated');

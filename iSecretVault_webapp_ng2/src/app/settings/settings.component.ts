@@ -1,27 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { VaultService } from '../vault/vault.service';
-import { CoreFirebaseService } from '../shared/core/core-firebase.service';
 import { AngularFire } from 'angularfire2';
 
+import { CoreFirebaseService } from '../shared/core/core-firebase.service';
 
 @Component({
-  selector: 'isv-categories',
-  templateUrl: 'categories.component.html',
+  selector: 'isv-settings',
+  templateUrl: 'settings.component.html',
   providers: [
     CoreFirebaseService
-  ],
-  styleUrls: ['categories.component.css']
+  ]
 })
-export class CategoriesComponent implements OnInit {
+export class SettingsComponent implements OnInit {
 
   private user: any = {};
 
   constructor(private router: Router,
     private angularfire: AngularFire,
-    private firebaseService: CoreFirebaseService,
-    private vaultService: VaultService) {
+    private firebaseService: CoreFirebaseService) {
   }
 
   ngOnInit() {
@@ -32,5 +29,4 @@ export class CategoriesComponent implements OnInit {
       }
     }, (error) => console.log(error));
   }
-
 }

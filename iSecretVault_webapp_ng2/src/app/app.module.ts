@@ -16,6 +16,7 @@ import { VaultService } from './vault/vault.service';
 import { VaultCreateModule } from './vault/vault-create/vault-create.module';
 import { VaultUnlockModule } from './vault/vault-unlock/vault-unlock.module';
 import { CategoriesModule } from './categories/categories.module';
+import { SettingsModule } from './settings/settings.module';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCdBSHSDDXoZdDR7BCxr6-XJR2lvfBY2i4',
@@ -39,7 +40,8 @@ const FIREBASE_AUTH_CONFIG = {
     CoreModule,
     VaultCreateModule,
     VaultUnlockModule,
-    CategoriesModule
+    CategoriesModule,
+    SettingsModule
   ],
   declarations: [
     AppComponent
