@@ -1,12 +1,14 @@
 <div class="list-group">
-  <a href="#" class="list-group-item disabled">
+  <a class="list-group-item disabled">
     Login
   </a>
-  <a href="#" class="list-group-item">Reinitialise login password</a>
+  <a class="list-group-item"
+     (click)="onSelect(RESET_LOGIN_PWD)">Reinitialise login password</a>
 </div>
 <div class="list-group">
-  <a href="#" class="list-group-item disabled">
+  <a class="list-group-item disabled">
     Two-step verification
   </a>
-  <a href="#" class="list-group-item">Reinitialise master code</a>
+  <a class="list-group-item"
+     (click)="onSelect(RESET_MASTER_CODE)">Reinitialise master code</a>
 </div>

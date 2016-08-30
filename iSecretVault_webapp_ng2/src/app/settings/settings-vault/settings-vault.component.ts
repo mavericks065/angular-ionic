@@ -3,21 +3,18 @@ import { Router } from '@angular/router';
 
 import { AngularFire } from 'angularfire2';
 
-import { CoreFirebaseService } from '../shared/core/core-firebase.service';
+import { CoreFirebaseService } from '../../shared/core/core-firebase.service';
 
 @Component({
-  selector: 'isv-settings',
-  templateUrl: 'settings.component.html',
+  selector: 'isv-settings-vault',
+  templateUrl: 'settings-vault.component.html',
   providers: [
     CoreFirebaseService
   ]
 })
-export class SettingsComponent implements OnInit {
+export class SettingsVaultComponent implements OnInit {
 
   private user: any = {};
-
-  private RESET_LOGIN_PWD: string = 'loginPassword';
-  private RESET_MASTER_CODE: string = 'vault';
 
   constructor(private router: Router,
     private angularfire: AngularFire,
@@ -31,15 +28,5 @@ export class SettingsComponent implements OnInit {
         this.user.reference = this.firebaseService.buildUserReference(auth.uid);
       }
     }, (error) => console.log(error));
-  }
-
-  onSelect(arg: string): void {
-    let url: string;
-    if (arg === this.RESET_LOGIN_PWD) {
-      url = ['/settings/', this.user.uid, '/loginPassword'].join('');
-    } else if (arg === this.RESET_MASTER_CODE) {
-      url = ['/settings/', this.user.uid, '/vault'].join('');
-    }
-    this.router.navigate([url]);
   }
 }
