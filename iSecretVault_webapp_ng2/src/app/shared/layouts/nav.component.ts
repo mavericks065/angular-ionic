@@ -23,7 +23,8 @@ export class NavComponent {
 
   logout(): void {
     this.authenticationService.logout();
-    this.router.navigate(['/login']);
+    this.vaultService.resetMasterCode();
+    this.router.navigate(['']);
   }
 
   canDisplayInternalMenu(): boolean {

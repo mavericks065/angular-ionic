@@ -4,6 +4,11 @@ import { authenticationSignupRoutes } from './authentication/authentication-sign
 import { authenticationLoginRoutes } from './authentication/authentication-login/authentication-login.routing';
 
 const appRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
   ...authenticationSignupRoutes,
   ...authenticationLoginRoutes
 ];

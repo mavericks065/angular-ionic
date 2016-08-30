@@ -17,4 +17,8 @@ export class VaultService {
   getMasterCode(): string {
     return this.masterCode;
   }
+
+  resetMasterCode(): void {
+    this.masterCode = '';
+  }
 }
