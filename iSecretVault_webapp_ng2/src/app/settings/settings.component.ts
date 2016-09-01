@@ -34,6 +34,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onSelect(arg: string): void {
+
     let url: string;
     if (arg === this.RESET_LOGIN_PWD) {
       url = ['/settings/', this.user.uid, '/loginPassword'].join('');

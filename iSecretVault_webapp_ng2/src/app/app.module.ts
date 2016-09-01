@@ -17,6 +17,10 @@ import { VaultCreateModule } from './vault/vault-create/vault-create.module';
 import { VaultUnlockModule } from './vault/vault-unlock/vault-unlock.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SettingsModule } from './settings/settings.module';
+// import { SettingsVaultModule }
+//   from './settings/settings-vault/settings-vault.module';
+// import { SettingsLoginPasswordModule }
+//   from './settings/settings-login-password/settings-login-password.module';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCdBSHSDDXoZdDR7BCxr6-XJR2lvfBY2i4',
