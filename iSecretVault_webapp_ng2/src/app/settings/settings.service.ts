@@ -10,4 +10,10 @@ export class SettingsService {
   updateLoginPassword(password: string): void {
     console.log('functionality not available in AngularFire');
   }
+
+  updateMasterCode(userReference: firebase.database.Reference,
+    newMasterCode: string): void {
+    this.firebaseService.setValue(userReference, 'masterCode',
+      newMasterCode);
+  }
 }
