@@ -1,3 +1,5 @@
+import { browser, element, by } from 'protractor';
+
 export class ISecretVaultWebappNg2Page {
   navigateTo() {
     return browser.get('/');

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavComponent } from './shared/layouts/nav.component';
+// import { NavComponent } from './shared/layouts/nav.component';
 
 import { AngularFire } from 'angularfire2';
 
@@ -8,9 +8,6 @@ import { AngularFire } from 'angularfire2';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   providers: [ AngularFire ],
-  directives: [
-    NavComponent
-  ],
   styleUrls: ['app.component.css']
 })
 export class AppComponent {

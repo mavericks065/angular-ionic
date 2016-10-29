@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { CoreFirebaseService } from './core-firebase.service';
 
 @NgModule({
-  declarations: [
-  ],
-  imports: [
-  ],
-  providers: [CoreFirebaseService],
+  imports: [],
+  declarations: [],
+  providers: [ CoreFirebaseService ],
 })
 export class CoreModule {
 

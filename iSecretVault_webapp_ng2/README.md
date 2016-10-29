@@ -1,9 +1,9 @@
-# iSecretVault Web App Angular2
+# ISecretVaultWebappNg2
 
 This project is the same project than the iSecretVault done using Ionic except than here it is for a web app and I am using Angular 2.
 For now the design has not been taking care of because my goal is first to get familiar with angular2 then create something with a smoother style.
 
-This project was originally generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.11-webpack.2.
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.18.
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

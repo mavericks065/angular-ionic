@@ -1,36 +1,50 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-      <div class="form-horizontal padding-top">
-        <div class="form-group">
-          <label class="col-sm-2 col-lg-2 control-label">
-            Login / email
-          </label>
-          <input class="col-sm-6 col-lg-6"
-                 type="email"
-                 [(ngModel)]="user.email"/>
-        </div>
+      <form #signupForm="ngForm">
+        <div class="form-horizontal padding-top">
+          <div class="form-group">
+            <label class="col-sm-2 col-lg-2 control-label">
+              Login / email
+            </label>
+            <input class="col-sm-6 col-lg-6"
+                   type="email"
+                   class="form-control"
+                   id="email"
+                   [(ngModel)]="user.email"
+                   name="email"
+                   #email="ngModel"/>
+          </div>
 
-        <div class="form-group">
-          <label class="col-sm-2 col-lg-2 control-label">
-            Password
-          </label>
-          <input class="col-sm-6 col-lg-6"
-                 type="password"
-                 [(ngModel)]="user.password" />
-        </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-lg-2 control-label">
+              Password
+            </label>
+            <input class="col-sm-6 col-lg-6"
+                   type="password"
+                   class="form-control"
+                   id="password"
+                   [(ngModel)]="user.password"
+                   name="password"
+                   #password="ngModel"/>
+          </div>
 
-        <div class="form-group">
-          <label class="col-sm-2 col-lg-2 control-label">
-            Password confirmation
-          </label>
-          <input class="col-sm-6 col-lg-6"
-                 type="password"
-                 [(ngModel)]="user.passwordConfirmation"/>
-        </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-lg-2 control-label">
+              Password confirmation
+            </label>
+            <input class="col-sm-6 col-lg-6"
+                   type="password"
+                   class="form-control"
+                   id="passwordConfirmation"
+                   [(ngModel)]="user.passwordConfirmation"
+                   name="passwordConfirmation"
+                   #passwordConfirmation="ngModel"/>
+          </div>
 
-        <button (click)="signup()">Sign up</button>
-      </div>
+          <button (click)="signup()">Sign up</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

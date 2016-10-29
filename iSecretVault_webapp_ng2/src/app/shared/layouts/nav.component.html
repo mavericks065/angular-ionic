@@ -25,15 +25,17 @@
         Log out
       </a>
     </li>
-    <li *ngIf="canDisplayInternalMenu()">
-      <a >
-        Categories
-      </a>
-    </li>
-    <li *ngIf="canDisplayInternalMenu()">
-      <a routerLink="/settings">
-        Settings
-      </a>
-    </li>
+    <div *ngIf="(canDisplayInternalMenu() | async)">
+      <li>
+        <a routerLink="/categories">
+          Categories
+        </a>
+      </li>
+      <li>
+        <a routerLink="/settings">
+          Settings
+        </a>
+      </li>
+    </div>
   </ol>
 </nav>

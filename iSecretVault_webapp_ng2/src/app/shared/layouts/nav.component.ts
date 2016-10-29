@@ -28,6 +28,8 @@ export class NavComponent {
   }
 
   canDisplayInternalMenu(): boolean {
+    console.log('canDisplayInternalMenu');
+    console.log(this.vaultService.getMasterCode());
     if (this.vaultService.getMasterCode() !== '') {
       return true;
     }

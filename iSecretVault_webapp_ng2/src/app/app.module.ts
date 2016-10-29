@@ -1,26 +1,30 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
-
-import { routing,
-         appRoutingProviders } from './app.routing';
+// import { FormsModule } from '@angular/forms';
 
 /* tslint:disable:no-unused-variable */
 import * as firebase from 'firebase';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { CoreModule } from './shared/core/core.module';
+
+import { routing,
+         appRoutingProviders } from './app.routing';
+
+import { NavComponent } from './shared/layouts/nav.component';
+
+import { AuthenticationLoginModule }
+  from './authentication/authentication-login/authentication-login.module';
+import { AuthenticationSignupModule }
+  from './authentication/authentication-signup/authentication-signup.module';
 import { VaultService } from './vault/vault.service';
 import { VaultCreateModule } from './vault/vault-create/vault-create.module';
 import { VaultUnlockModule } from './vault/vault-unlock/vault-unlock.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SettingsModule } from './settings/settings.module';
-// import { SettingsVaultModule }
-//   from './settings/settings-vault/settings-vault.module';
-// import { SettingsLoginPasswordModule }
-//   from './settings/settings-login-password/settings-login-password.module';
+
+import { AppComponent } from './app.component';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCdBSHSDDXoZdDR7BCxr6-XJR2lvfBY2i4',
@@ -37,26 +41,29 @@ const FIREBASE_AUTH_CONFIG = {
 @NgModule({
   imports: [
     BrowserModule,
+    // FormsModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG, FIREBASE_AUTH_CONFIG),
     CommonModule,
-    FormsModule,
-    routing,
     CoreModule,
+    routing,
+    AuthenticationSignupModule,
+    AuthenticationLoginModule,
     VaultCreateModule,
     VaultUnlockModule,
     CategoriesModule,
     SettingsModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    NavComponent
   ],
   providers: [
     appRoutingProviders,
     VaultService
   ],
-  entryComponents: [AppComponent],
-  bootstrap: [AppComponent]
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  entryComponents: [ AppComponent ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule {
-
 }

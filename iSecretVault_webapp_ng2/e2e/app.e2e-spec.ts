@@ -1,6 +1,6 @@
 import { ISecretVaultWebappNg2Page } from './app.po';
 
-describe('i-secret-vault-webapp-ng2 App', function() {
+describe('iSecretVault_webapp_ng2 App', function() {
   let page: ISecretVaultWebappNg2Page;
 
   beforeEach(() => {
